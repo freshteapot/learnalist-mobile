@@ -7,6 +7,12 @@
 - Trigger the user to learn with the lists.
 - Interact with the learnalist api.
 
+
+# Notes
+
+- Currently focused on getting it up and running on iOS as I do not own an android device.
+
+
 # Development
 
 Working with the json models, will require a rebuld if changes are made.
@@ -23,5 +29,9 @@ To test, use the ide or the via the command line.
 ### Run a specific test within a file.
 
 ```
-flutter test --no-pub test/widget_test.dart --plain-name="Test list v1"
+flutter test --no-pub --plain-name="Test list v1" test/models_learnalist.dart
 ```
+
+# Links
+
+- [Learnalist api](https://github.com/freshteapot/learnalist-api)
