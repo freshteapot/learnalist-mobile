@@ -1,0 +1,29 @@
+{
+    "data": [
+        {
+            "from": "appelsinen",
+            "to": "the orange"
+        },
+        {
+            "from": "måltidet",
+            "to": "the meal"
+        },
+        {
+            "from": "saltet",
+            "to": "the salt"
+        },
+        {
+            "from": "ender",
+            "to": "ducks"
+        },
+        {
+            "from": "remsen",
+            "to": "strip (of paper)"
+        }
+    ],
+    "info": {
+        "title": "Norweigan words on Duolingo",
+        "type": "v2"
+    },
+    "uuid": "ad573393-4898-5c23-9781-3f0caafd7734"
+}
