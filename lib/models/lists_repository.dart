@@ -11,24 +11,40 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+import 'package:scoped_model/scoped_model.dart';
 import 'learnalist.dart';
 
-class ListsRepository {
-  static List<Alist> getLists(ListType listType) {
-    List<Alist> allLists = List<Alist>();
+class ListsRepository extends Model {
+  Set<Alist> _allLists = Set<Alist>();
+  void loadLists() {
+    Alist a = Alist.fromJson(exampleListV1);
+    Alist b = Alist.fromJson(exampleListV2);
+    _allLists.add(a);
+    _allLists.add(a);
+    _allLists.add(b);
+    print('loaded');
+    print(_allLists.length);
+  }
 
-    final Alist a = Alist.fromJson(exampleListV1);
-    final Alist b = Alist.fromJson(exampleListV2);
-    allLists.add(a);
-    allLists.add(b);
+  List<Alist> get aLists {
+    // Need a way to order this ;)
+    var temp = _allLists.toList();
+    temp.sort(
+        (Alist a, Alist b) => a.listInfo.title.compareTo(b.listInfo.title));
+    return temp;
+  }
 
-    if (listType == null) {
-      return allLists;
-    } else {
-      return allLists.where((Alist alist) {
-        return alist.listInfo.listType == listType;
-      }).toList();
-    }
+  void addList() {
+    print('addList');
+  }
+
+  void updateAlist(Alist aList) {
+    Alist current = _allLists.singleWhere(
+        (current) => aList.uuid == current.uuid,
+        orElse: () => null);
+    _allLists.remove(current);
+    _allLists.add(aList);
+
+    notifyListeners();
   }
 }

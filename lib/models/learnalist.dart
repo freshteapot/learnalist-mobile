@@ -26,6 +26,21 @@ class ListInfo {
 
 @JsonSerializable()
 class Alist {
+  @override
+  int get hashCode {
+    // TODO is this enough?
+    return uuid.hashCode;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    bool result = false;
+    if (other is Alist && uuid == other.uuid) {
+      result = true;
+    }
+    return result;
+  }
+
   final String uuid;
   @JsonKey(name: 'info', nullable: false)
   final ListInfo listInfo;

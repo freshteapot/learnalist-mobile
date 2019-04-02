@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/models/learnalist.dart';
 import 'package:learnalist/routes/view_list.dart';
-
-// TODO move to be dynamic
-final List<Alist> listOfLists = getLists();
+import 'package:learnalist/models/lists_repository.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class ListsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: _buildList(listOfLists),
+    return ScopedModelDescendant<ListsRepository>(
+      builder: (context, child, storage) => ListView(
+            // Take the items in the current cart.
+            children: storage.aLists
+                // For each of them, create a Text widget.
+                .map((item) => aListTile(context, item))
+                // Then make a list of these widgets.
+                .toList(),
+          ),
     );
   }
-}
-
-Widget _buildList(List<Alist> listOfLists) {
-  return ListView.builder(
-    itemCount: listOfLists.length,
-    itemBuilder: (context, index) {
-      return aListTile(context, listOfLists[index]);
-    },
-  );
 }
 
 // Parse in the list and have

@@ -40,4 +40,16 @@ void main() {
     List<Alist> lists = getLists();
     print(lists);
   });
+
+  test('Set of lists', () {
+    Set<Alist> setOfLists = Set();
+    List<Alist> lists = getLists();
+    lists.forEach((aList) {
+      setOfLists.add(aList);
+    });
+    lists.forEach((aList) {
+      setOfLists.add(aList);
+    });
+    print(setOfLists.length);
+  });
 }

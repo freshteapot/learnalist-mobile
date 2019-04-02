@@ -19,6 +19,9 @@ class RootScreen extends StatelessWidget {
         new IconButton(
           icon: new Icon(Icons.close),
           tooltip: 'Closes application',
+          onPressed: () {
+            print('Close the app or something');
+          },
         ),
       ],
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/models/learnalist.dart';
 import 'package:learnalist/widgets/list_view_list_info.dart';
+import 'package:learnalist/models/lists_repository.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class ListViewV1Screen extends StatelessWidget {
   final AlistV1 aList;
@@ -15,22 +17,36 @@ class ListViewV1Screen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(children: [buildTitleSection(aList), _buildList(aList)]),
+        child: Column(children: [
+          buildTitleSection(aList),
+          Flexible(child: _buildList(aList))
+        ]),
       ),
     );
   }
 }
 
 Widget _buildList(AlistV1 aList) {
-  return ListView.builder(
-    padding: const EdgeInsets.all(32),
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
-    itemCount: aList.listData.length,
-    itemBuilder: (context, index) {
-      return ListTile(
-        title: Text('${aList.listData[index]}'),
-      );
-    },
-  );
+  return ScopedModelDescendant<ListsRepository>(
+      builder: (context, child, storage) => ListView.builder(
+            padding: const EdgeInsets.all(32),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: aList.listData.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text('${aList.listData[index]}'),
+                onTap: () {
+                  print(index);
+                  print(aList);
+                  aList.listData.add('Chris');
+                  ScopedModel.of<ListsRepository>(context).updateAlist(aList);
+                },
+                onLongPress: () {
+                  aList.listData.removeAt(index);
+                  ScopedModel.of<ListsRepository>(context).updateAlist(aList);
+                },
+              );
+            },
+          ));
 }
