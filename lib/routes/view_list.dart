@@ -25,11 +25,18 @@ class ViewListRoute extends StatelessWidget {
     }
 
     if (aList.listInfo.listType == ListType.v1) {
-      return ListViewV1Screen(aList: newAlistV1(aList));
+      if (aList is! AlistV1) {
+        aList = newAlistV1(aList);
+      }
+      return ListViewV1Screen(aList: aList);
     }
     if (aList.listInfo.listType == ListType.v2) {
-      return ListViewV2Screen(aList: newAlistV2(aList));
+      if (aList is! AlistV2) {
+        aList = newAlistV2(aList);
+      }
+      return ListViewV2Screen(aList: aList);
     }
+
     // TODO return an error page for lists
     return ListViewNotFoundScreen();
   }

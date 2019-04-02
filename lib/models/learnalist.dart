@@ -25,6 +25,19 @@ class ListInfo {
 }
 
 @JsonSerializable()
+class AlistDatabase {
+  @JsonKey(name: 'items', nullable: false)
+  List<Alist> items;
+
+  AlistDatabase({this.items});
+
+  factory AlistDatabase.fromJson(Map<String, dynamic> json) =>
+      _$AlistDatabaseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AlistDatabaseToJson(this);
+}
+
+@JsonSerializable()
 class Alist {
   @override
   int get hashCode {

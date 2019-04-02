@@ -3,27 +3,17 @@ import 'package:learnalist/models/learnalist.dart';
 import 'package:learnalist/widgets/list_view_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:learnalist/routes/edit_list.dart';
 
-class ListViewV1Screen extends StatelessWidget {
+class ListEditV1Screen extends StatelessWidget {
   final AlistV1 aList;
 
-  ListViewV1Screen({Key key, @required this.aList}) : super(key: key);
+  ListEditV1Screen({Key key, @required this.aList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("List View Screen"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              Navigator.of(context).pushNamed(EditListRoute.routePrefix,
-                  arguments: EditListRouteArguments(aList.uuid, aList: aList));
-            },
-          ),
-        ],
+        title: Text("List Edit Screen"),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -46,16 +36,6 @@ Widget _buildList(AlistV1 aList) {
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text('${aList.listData[index]}'),
-                onTap: () {
-                  print(index);
-                  print(aList);
-                  aList.listData.add('Chris');
-                  ScopedModel.of<ListsRepository>(context).updateAlist(aList);
-                },
-                onLongPress: () {
-                  aList.listData.removeAt(index);
-                  ScopedModel.of<ListsRepository>(context).updateAlist(aList);
-                },
               );
             },
           ));

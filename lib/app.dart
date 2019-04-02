@@ -22,6 +22,7 @@ class _LearnalistAppState extends State<LearnalistApp> {
         CreateListV2Route.routePrefix: (BuildContext context) =>
             CreateListV2Route(),
         ViewListRoute.routePrefix: (BuildContext context) => ViewListRoute(),
+        EditListRoute.routePrefix: (BuildContext context) => EditListRoute(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/create/list') {

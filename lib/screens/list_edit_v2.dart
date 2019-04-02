@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/models/learnalist.dart';
 import 'package:learnalist/widgets/list_view_list_info.dart';
-import 'package:learnalist/routes/edit_list.dart';
 
-class ListViewV2Screen extends StatelessWidget {
+class ListEditV2Screen extends StatelessWidget {
   final AlistV2 aList;
 
-  ListViewV2Screen({Key key, @required this.aList}) : super(key: key);
+  ListEditV2Screen({Key key, @required this.aList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("List View Screen"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              Navigator.of(context).pushNamed(EditListRoute.routePrefix,
-                  arguments: EditListRouteArguments(aList.uuid, aList: aList));
-            },
-          ),
-        ],
+        title: Text("List Edit Screen"),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

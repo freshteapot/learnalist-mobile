@@ -35,6 +35,16 @@ const _$ListTypeEnumMap = <ListType, dynamic>{
   ListType.v2: 'v2'
 };
 
+AlistDatabase _$AlistDatabaseFromJson(Map<String, dynamic> json) {
+  return AlistDatabase(
+      items: (json['items'] as List)
+          .map((e) => Alist.fromJson(e as Map<String, dynamic>))
+          .toList());
+}
+
+Map<String, dynamic> _$AlistDatabaseToJson(AlistDatabase instance) =>
+    <String, dynamic>{'items': instance.items};
+
 Alist _$AlistFromJson(Map<String, dynamic> json) {
   return Alist(
       uuid: json['uuid'] as String,
