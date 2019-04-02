@@ -7,15 +7,33 @@ part of 'learnalist.dart';
 // **************************************************************************
 
 ListInfo _$ListInfoFromJson(Map<String, dynamic> json) {
-  return ListInfo(
-      json['title'] as String, json['type'] as String, json['from'] as String);
+  return ListInfo(json['title'] as String,
+      _$enumDecode(_$ListTypeEnumMap, json['type']), json['from'] as String);
 }
 
 Map<String, dynamic> _$ListInfoToJson(ListInfo instance) => <String, dynamic>{
       'title': instance.title,
-      'type': instance.listType,
+      'type': _$ListTypeEnumMap[instance.listType],
       'from': instance.from
     };
+
+T _$enumDecode<T>(Map<T, dynamic> enumValues, dynamic source) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return enumValues.entries
+      .singleWhere((e) => e.value == source,
+          orElse: () => throw ArgumentError(
+              '`$source` is not one of the supported values: '
+              '${enumValues.values.join(', ')}'))
+      .key;
+}
+
+const _$ListTypeEnumMap = <ListType, dynamic>{
+  ListType.v1: 'v1',
+  ListType.v2: 'v2'
+};
 
 Alist _$AlistFromJson(Map<String, dynamic> json) {
   return Alist(

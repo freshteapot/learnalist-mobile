@@ -2,12 +2,17 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'learnalist.g.dart';
 
+enum ListType {
+  v1,
+  v2,
+}
+
 @JsonSerializable()
 class ListInfo {
   final String title;
 
   @JsonKey(name: 'type', nullable: false)
-  final String listType;
+  final ListType listType;
 
   final String from;
 
