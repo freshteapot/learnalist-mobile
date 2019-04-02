@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/widgets/list_view_list_info.dart';
 
 class ListViewV1Screen extends StatelessWidget {
   final AlistV1 aList;
@@ -14,8 +15,22 @@ class ListViewV1Screen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Text(aList.listInfo.listType.toString()),
+        child: Column(children: [buildTitleSection(aList), _buildList(aList)]),
       ),
     );
   }
+}
+
+Widget _buildList(AlistV1 aList) {
+  return ListView.builder(
+    padding: const EdgeInsets.all(32),
+    scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+    itemCount: aList.listData.length,
+    itemBuilder: (context, index) {
+      return ListTile(
+        title: Text('${aList.listData[index]}'),
+      );
+    },
+  );
 }
