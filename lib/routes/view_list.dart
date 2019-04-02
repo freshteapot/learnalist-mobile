@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learnalist/models/learnalist.dart';
 import 'package:learnalist/screens/list_view_v1.dart';
 import 'package:learnalist/screens/list_view_v2.dart';
+import 'package:learnalist/screens/list_view_not_found.dart';
 
 // TODO move to be dynamic
 final List<Alist> listOfLists = getLists();
@@ -18,7 +19,7 @@ class ViewListRoute extends StatelessWidget {
     if (args.aList != null) {
       aList = args.aList;
     } else {
-      // TODO fix
+      // TODO Use real storage
       aList = listOfLists.singleWhere((aList) => aList.uuid == args.uuid,
           orElse: () => null);
     }
@@ -30,6 +31,7 @@ class ViewListRoute extends StatelessWidget {
       return ListViewV2Screen(aList: newAlistV2(aList));
     }
     // TODO return an error page for lists
+    return ListViewNotFoundScreen();
   }
 }
 
