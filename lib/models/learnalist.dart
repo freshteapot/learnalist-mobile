@@ -9,7 +9,7 @@ enum ListType {
 
 @JsonSerializable()
 class ListInfo {
-  final String title;
+  String title;
 
   @JsonKey(name: 'type', nullable: false)
   final ListType listType;
