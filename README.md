@@ -37,3 +37,4 @@ flutter test --no-pub --plain-name="Test list v1" test/models_learnalist.dart
 - [Learnalist api](https://github.com/freshteapot/learnalist-api)
 - [How to use state from a widget](https://stackoverflow.com/questions/50818770/passing-data-to-a-stateful-widget)
 - [Making a nice popupmenu](https://flutter.dev/docs/catalog/samples/basic-app-bar) [on github](https://github.com/flutter/flutter/blob/master/examples/catalog/lib/basic_app_bar.dart)
+- [Icons](https://docs.flutter.io/flutter/material/Icons-class.html)
