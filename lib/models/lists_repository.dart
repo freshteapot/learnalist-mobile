@@ -66,6 +66,11 @@ class ListsRepository extends Model {
     return temp;
   }
 
+  Alist getByUuid(String uuid) {
+    return _allLists.singleWhere((current) => uuid == current.uuid,
+        orElse: () => null);
+  }
+
   void addList() {
     print('addList');
   }

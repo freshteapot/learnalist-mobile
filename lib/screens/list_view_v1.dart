@@ -34,29 +34,33 @@ class ListViewV1Screen extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildList(AlistV1 aList) {
-  return ScopedModelDescendant<ListsRepository>(
-      builder: (context, child, storage) => ListView.builder(
-            padding: const EdgeInsets.all(32),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: aList.listData.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text('${aList.listData[index]}'),
-                onTap: () {
-                  print(index);
-                  print(aList);
-                  aList.listData.add('Chris');
-                  ScopedModel.of<ListsRepository>(context).updateAlist(aList);
-                },
-                onLongPress: () {
-                  aList.listData.removeAt(index);
-                  ScopedModel.of<ListsRepository>(context).updateAlist(aList);
-                },
-              );
-            },
-          ));
+  Widget _buildList(AlistV1 aList) {
+    return ScopedModelDescendant<ListsRepository>(
+        builder: (context, child, storage) => ListView.builder(
+              padding: const EdgeInsets.all(32),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: storage.getByUuid(aList.uuid).listData.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text('${aList.listData[index]}'),
+                  onTap: () {
+                    print(index);
+                    print(aList);
+                    aList.listData.add('Chris');
+                    ScopedModel.of<ListsRepository>(context,
+                            rebuildOnChange: true)
+                        .updateAlist(aList);
+                  },
+                  onLongPress: () {
+                    aList.listData.removeAt(index);
+                    ScopedModel.of<ListsRepository>(context,
+                            rebuildOnChange: true)
+                        .updateAlist(aList);
+                  },
+                );
+              },
+            ));
+  }
 }

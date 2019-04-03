@@ -30,10 +30,6 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
     });
   }
 
-  void reloadListData() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +38,7 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
         leading: new IconButton(
             icon: new Icon(Icons.arrow_back),
             onPressed: () {
-              //ScopedModel.of<ListsRepository>(context)
+              //ScopedModel.of<ListsRepository>(context, rebuildOnChange: true)
               //.updateAlist(widget.aList);
               print('Leaving the edit screen');
               Navigator.pop(context, true);
@@ -66,44 +62,46 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
                   _toggleShowingAddForm,
                 )
               : new Container(),
-          Flexible(child: _buildList(widget.aList, reloadListData))
+          Flexible(child: _buildList(widget.aList))
         ]),
       ),
     );
   }
-}
 
-Widget _buildList(AlistV1 aList, renderCallback) {
-  return ScopedModelDescendant<ListsRepository>(
-      builder: (context, child, storage) => ListView.builder(
-            padding: const EdgeInsets.all(32),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: aList.listData.length,
-            itemBuilder: (context, index) {
-              final item = aList.listData[index];
-              return Dismissible(
-                  key: Key(item),
-                  onDismissed: (direction) {
-                    // Remove the item from our data source.
-                    print(direction);
+  Widget _buildList(AlistV1 aList) {
+    return ScopedModelDescendant<ListsRepository>(
+        builder: (context, child, storage) => ListView.builder(
+              padding: const EdgeInsets.all(32),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: aList.listData.length,
+              itemBuilder: (context, index) {
+                final item = aList.listData[index];
+                return Dismissible(
+                    key: Key(item),
+                    onDismissed: (direction) {
+                      // Remove the item from our data source.
+                      print(direction);
 
-                    aList.listData.removeAt(index);
-                    ScopedModel.of<ListsRepository>(context).updateAlist(aList);
-                    // Then show a snackbar!
-                    Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text("$item dismissed")));
-                  },
-                  // Show a red background as the item is swiped away
-                  background: Container(color: Colors.red),
-                  child: ListTile(
-                    title: Text('$item'),
-                    onTap: () {
-                      print('edit');
+                      aList.listData.removeAt(index);
+                      ScopedModel.of<ListsRepository>(context,
+                              rebuildOnChange: true)
+                          .updateAlist(aList);
+                      // Then show a snackbar!
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text("$item dismissed")));
                     },
-                  ));
-            },
-          ));
+                    // Show a red background as the item is swiped away
+                    background: Container(color: Colors.red),
+                    child: ListTile(
+                      title: Text('$item'),
+                      onTap: () {
+                        print('edit');
+                      },
+                    ));
+              },
+            ));
+  }
 }
 
 // Create a Form Widget
@@ -164,7 +162,8 @@ class V1ListFormState extends State<V1ListForm> {
                                   if (_formKey.currentState.validate()) {
                                     _formKey.currentState.save();
                                     // If the form is valid, we want to show a Snackbar
-                                    ScopedModel.of<ListsRepository>(context)
+                                    ScopedModel.of<ListsRepository>(context,
+                                            rebuildOnChange: true)
                                         .updateAlist(widget.aList);
                                     Scaffold.of(context).showSnackBar(SnackBar(
                                         content: Text('Processing Data')));
