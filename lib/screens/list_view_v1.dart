@@ -4,6 +4,7 @@ import 'package:learnalist/widgets/list_view_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:learnalist/routes/edit_list.dart';
+import 'package:learnalist/routes/find.dart';
 
 class ListViewV1Screen extends StatelessWidget {
   final AlistV1 aList;
@@ -15,6 +16,11 @@ class ListViewV1Screen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("List View Screen"),
+        leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.popAndPushNamed(context, FindRoute.routePrefix);
+            }),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),

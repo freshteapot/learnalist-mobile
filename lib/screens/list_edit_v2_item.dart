@@ -4,10 +4,10 @@ import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 // Create a Form Widget
-class ListEditItemV1Screen extends StatelessWidget {
-  final AlistV1 aList;
+class ListEditItemV2Screen extends StatelessWidget {
+  final AlistV2 aList;
 
-  ListEditItemV1Screen({Key key, @required this.aList}) : super(key: key);
+  ListEditItemV2Screen({Key key, @required this.aList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class ListEditItemV1Screen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(children: [
-          V1ListItemV1Form(aList),
+          V1ListItemV2Form(aList),
         ]),
       ),
     );
@@ -26,20 +26,20 @@ class ListEditItemV1Screen extends StatelessWidget {
 }
 
 // Create a Form Widget
-class V1ListItemV1Form extends StatefulWidget {
+class V1ListItemV2Form extends StatefulWidget {
   final Alist aList;
 
-  V1ListItemV1Form(this.aList);
+  V1ListItemV2Form(this.aList);
 
   @override
-  V1ListItemV1FormState createState() {
-    return V1ListItemV1FormState();
+  V1ListItemV2FormState createState() {
+    return V1ListItemV2FormState();
   }
 }
 
-class V1ListItemV1FormState extends State<V1ListItemV1Form> {
+class V1ListItemV2FormState extends State<V1ListItemV2Form> {
   final _formKey = GlobalKey<FormState>();
-
+  AlistItemTypeV2 newItem = new AlistItemTypeV2('', '');
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey we created above
@@ -54,19 +54,36 @@ class V1ListItemV1FormState extends State<V1ListItemV1Form> {
                   children: <Widget>[
                     TextFormField(
                         initialValue: '',
+                        decoration: InputDecoration(
+                          labelText: 'From:',
+                        ),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter some text';
                           }
                         },
                         onSaved: (String value) {
-                          widget.aList.listData.add(value);
+                          newItem.from = value;
+                        }),
+                    TextFormField(
+                        initialValue: '',
+                        decoration: InputDecoration(
+                          labelText: 'To:',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                        },
+                        onSaved: (String value) {
+                          newItem.to = value;
                         }),
                     ButtonBar(
                       children: [
                         FlatButton(
                           onPressed: () {
                             _formKey.currentState.reset();
+                            newItem = new AlistItemTypeV2('', '');
                           },
                           child: Text('Reset'),
                         ),
@@ -74,6 +91,8 @@ class V1ListItemV1FormState extends State<V1ListItemV1Form> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
+                              widget.aList.listData.add(newItem);
+
                               _formKey.currentState.reset();
                               // If the form is valid, we want to show a Snackbar
                               ScopedModel.of<ListsRepository>(context,

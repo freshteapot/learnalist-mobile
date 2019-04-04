@@ -4,6 +4,7 @@ import 'package:learnalist/widgets/list_edit_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:learnalist/screens/list_edit_v1_item.dart';
+import 'package:learnalist/routes/view_list.dart';
 
 // Create a Form Widget
 class ListEditV1Screen extends StatefulWidget {
@@ -36,7 +37,9 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
             icon: new Icon(Icons.arrow_back),
             onPressed: () {
               print('Leaving the edit screen, should we hit save here.');
-              Navigator.pop(context, true);
+              Navigator.of(context).pushNamed(ViewListRoute.routePrefix,
+                  arguments: ViewListRouteArguments(widget.aList.uuid,
+                      aList: widget.aList));
             }),
         actions: <Widget>[
           IconButton(

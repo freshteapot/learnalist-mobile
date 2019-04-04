@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:learnalist/models/learnalist.dart';
 import 'package:learnalist/widgets/list_view_list_info.dart';
 import 'package:learnalist/routes/edit_list.dart';
+import 'package:learnalist/routes/find.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:learnalist/models/lists_repository.dart';
 
 class ListViewV2Screen extends StatelessWidget {
   final AlistV2 aList;
@@ -13,6 +16,11 @@ class ListViewV2Screen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("List View Screen"),
+        leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.popAndPushNamed(context, FindRoute.routePrefix);
+            }),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
@@ -25,23 +33,27 @@ class ListViewV2Screen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(children: [buildTitleSection(aList), _buildList(aList)]),
+        child: Column(children: [
+          buildTitleSection(aList),
+          Flexible(child: _buildList(aList))
+        ]),
       ),
     );
   }
-}
 
-Widget _buildList(AlistV2 aList) {
-  return ListView.builder(
-    padding: const EdgeInsets.all(32),
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
-    itemCount: aList.listData.length,
-    itemBuilder: (context, index) {
-      return ListTile(
-        title:
-            Text('${aList.listData[index].from} = ${aList.listData[index].to}'),
-      );
-    },
-  );
+  Widget _buildList(AlistV2 aList) {
+    return ScopedModelDescendant<ListsRepository>(
+        builder: (context, child, storage) => ListView.builder(
+              padding: const EdgeInsets.all(32),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: aList.listData.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(
+                      '${aList.listData[index].from} = ${aList.listData[index].to}'),
+                );
+              },
+            ));
+  }
 }

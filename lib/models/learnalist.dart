@@ -66,15 +66,22 @@ class Alist {
   factory Alist.fromJson(Map<String, dynamic> json) => _$AlistFromJson(json);
 
   Map<String, dynamic> toJson() => _$AlistToJson(this);
+  Alist toAlist() {}
 }
 
+@JsonSerializable()
 class AlistV1 extends Alist {
+  @JsonKey(name: 'data', nullable: false)
   final List<String> listData = List<String>();
-  AlistV1(Alist aList) : super(uuid: aList.uuid, listInfo: aList.listInfo);
+
+  AlistV1({uuid, listInfo, listData}) : super(uuid: uuid, listInfo: listInfo);
+
+  Map<String, dynamic> toJson() => _$AlistV1ToJson(this);
 }
 
 AlistV1 newAlistV1(Alist aList) {
-  AlistV1 temp = AlistV1(aList);
+  AlistV1 temp = AlistV1(
+      uuid: aList.uuid, listInfo: aList.listInfo, listData: aList.listData);
 
   for (String item in aList.listData) {
     temp.listData.add(item);
@@ -82,21 +89,31 @@ AlistV1 newAlistV1(Alist aList) {
   return temp;
 }
 
+@JsonSerializable()
 class AlistV2 extends Alist {
-  final List<AlistItemTypeV2> listData = List<AlistItemTypeV2>();
-  AlistV2(Alist aList) : super(uuid: aList.uuid, listInfo: aList.listInfo);
+  @JsonKey(name: 'data', nullable: false)
+  List<AlistItemTypeV2> listData = List<AlistItemTypeV2>();
+  AlistV2({uuid, listInfo, listData}) : super(uuid: uuid, listInfo: listInfo);
+  Map<String, dynamic> toJson() => _$AlistV2ToJson(this);
 }
 
+@JsonSerializable()
 class AlistItemTypeV2 {
-  final String from;
-  final String to;
+  String from;
+  String to;
 
   AlistItemTypeV2(this.from, this.to);
+
+  factory AlistItemTypeV2.fromJson(Map<String, dynamic> json) =>
+      _$AlistItemTypeV2FromJson(json);
+
+  Map<String, dynamic> toJson() => _$AlistItemTypeV2ToJson(this);
 }
 
 AlistV2 newAlistV2(Alist aList) {
-  AlistV2 temp = AlistV2(aList);
-
+  AlistV2 temp = AlistV2(
+      uuid: aList.uuid, listInfo: aList.listInfo, listData: aList.listData);
+  temp.listData = List<AlistItemTypeV2>();
   for (Map<String, dynamic> item in aList.listData) {
     temp.listData
         .add(AlistItemTypeV2(item['from'] as String, item['to'] as String));

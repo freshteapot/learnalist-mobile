@@ -58,6 +58,35 @@ Map<String, dynamic> _$AlistToJson(Alist instance) => <String, dynamic>{
       'data': instance.listData
     };
 
+AlistV1 _$AlistV1FromJson(Map<String, dynamic> json) {
+  return AlistV1(
+      uuid: json['uuid'], listInfo: json['info'], listData: json['data']);
+}
+
+Map<String, dynamic> _$AlistV1ToJson(AlistV1 instance) => <String, dynamic>{
+      'uuid': instance.uuid,
+      'info': instance.listInfo,
+      'data': instance.listData
+    };
+
+AlistV2 _$AlistV2FromJson(Map<String, dynamic> json) {
+  return AlistV2(
+      uuid: json['uuid'], listInfo: json['info'], listData: json['data']);
+}
+
+Map<String, dynamic> _$AlistV2ToJson(AlistV2 instance) => <String, dynamic>{
+      'uuid': instance.uuid,
+      'info': instance.listInfo,
+      'data': instance.listData
+    };
+
+AlistItemTypeV2 _$AlistItemTypeV2FromJson(Map<String, dynamic> json) {
+  return AlistItemTypeV2(json['from'] as String, json['to'] as String);
+}
+
+Map<String, dynamic> _$AlistItemTypeV2ToJson(AlistItemTypeV2 instance) =>
+    <String, dynamic>{'from': instance.from, 'to': instance.to};
+
 // **************************************************************************
 // JsonLiteralGenerator
 // **************************************************************************
