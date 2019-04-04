@@ -27,7 +27,7 @@ class ListEditItemV2Screen extends StatelessWidget {
 
 // Create a Form Widget
 class ListItemV2Form extends StatefulWidget {
-  final Alist aList;
+  final AlistV2 aList;
 
   ListItemV2Form(this.aList);
 
@@ -114,7 +114,7 @@ class ListItemV2FormState extends State<ListItemV2Form> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
-                              widget.aList.listData.add(_newItem);
+                              widget.aList.addItem(_newItem);
 
                               _formKey.currentState.reset();
                               _newItem = new AlistItemTypeV2('', '');

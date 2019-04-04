@@ -27,7 +27,7 @@ class ListEditItemV1Screen extends StatelessWidget {
 
 // Create a Form Widget
 class ListItemV1Form extends StatefulWidget {
-  final Alist aList;
+  final AlistV1 aList;
 
   ListItemV1Form(this.aList);
 
@@ -94,7 +94,7 @@ class ListItemV1FormState extends State<ListItemV1Form> {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
 
-                              widget.aList.listData.add(_newItem);
+                              widget.aList.addItem(_newItem);
 
                               _formKey.currentState.reset();
                               FocusScope.of(context).requestFocus(_firstFocus);

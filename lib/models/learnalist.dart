@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-
+import 'package:uuid/uuid.dart';
 part 'learnalist.g.dart';
+
+var uuid = new Uuid();
 
 enum ListType {
   v1,
@@ -12,11 +14,11 @@ class ListInfo {
   String title;
 
   @JsonKey(name: 'type', nullable: false)
-  final ListType listType;
+  ListType listType;
 
-  final String from;
+  String from = '';
 
-  ListInfo(this.title, this.listType, this.from);
+  ListInfo({this.title, this.listType, List listData});
 
   factory ListInfo.fromJson(Map<String, dynamic> json) =>
       _$ListInfoFromJson(json);
@@ -54,9 +56,9 @@ class Alist {
     return result;
   }
 
-  final String uuid;
+  String uuid;
   @JsonKey(name: 'info', nullable: false)
-  final ListInfo listInfo;
+  ListInfo listInfo;
 
   @JsonKey(name: 'data', nullable: false)
   final dynamic listData;
@@ -71,29 +73,64 @@ class Alist {
 
 @JsonSerializable()
 class AlistV1 extends Alist {
-  @JsonKey(name: 'data', nullable: false)
-  final List<String> listData = List<String>();
+  void addItem(String value) {
+    this.listData.add(value);
+  }
 
-  AlistV1({uuid, listInfo, listData}) : super(uuid: uuid, listInfo: listInfo);
+  void removeItem(int index) {
+    this.listData.removeAt(index);
+  }
+
+  List<String> getItems() {
+    List<String> items = new List<String>();
+    for (String item in this.listData) {
+      items.add(item);
+    }
+    return items;
+  }
+
+  AlistV1({uuid, listInfo, listData})
+      : super(uuid: uuid, listInfo: listInfo, listData: listData);
 
   Map<String, dynamic> toJson() => _$AlistV1ToJson(this);
+}
+
+AlistV1 newEmptyAlistV1() {
+  Alist aList = Alist(
+      uuid: uuid.v4(),
+      listInfo: ListInfo(title: '', listType: ListType.v1),
+      listData: List());
+  return newAlistV1(aList);
 }
 
 AlistV1 newAlistV1(Alist aList) {
   AlistV1 temp = AlistV1(
       uuid: aList.uuid, listInfo: aList.listInfo, listData: aList.listData);
-
-  for (String item in aList.listData) {
-    temp.listData.add(item);
-  }
   return temp;
 }
 
 @JsonSerializable()
 class AlistV2 extends Alist {
-  @JsonKey(name: 'data', nullable: false)
-  List<AlistItemTypeV2> listData = List<AlistItemTypeV2>();
-  AlistV2({uuid, listInfo, listData}) : super(uuid: uuid, listInfo: listInfo);
+  void addItem(AlistItemTypeV2 value) {
+    this.listData.add(value);
+  }
+
+  void removeItem(int index) {
+    this.listData.removeAt(index);
+  }
+
+  List<AlistItemTypeV2> getItems() {
+    List<AlistItemTypeV2> items = List<AlistItemTypeV2>();
+    for (AlistItemTypeV2 item in this.listData) {
+      //items.add(AlistItemTypeV2(item['from'] as String, item['to'] as String));
+      items.add(item);
+    }
+
+    return items;
+  }
+
+  AlistV2({uuid, listInfo, listData})
+      : super(uuid: uuid, listInfo: listInfo, listData: listData);
   Map<String, dynamic> toJson() => _$AlistV2ToJson(this);
 }
 
@@ -110,14 +147,17 @@ class AlistItemTypeV2 {
   Map<String, dynamic> toJson() => _$AlistItemTypeV2ToJson(this);
 }
 
+AlistV2 newEmptyAlistV2() {
+  Alist aList = Alist(
+      uuid: uuid.v4(),
+      listInfo: ListInfo(title: '', listType: ListType.v2),
+      listData: List());
+  return newAlistV2(aList);
+}
+
 AlistV2 newAlistV2(Alist aList) {
   AlistV2 temp = AlistV2(
       uuid: aList.uuid, listInfo: aList.listInfo, listData: aList.listData);
-  temp.listData = List<AlistItemTypeV2>();
-  for (Map<String, dynamic> item in aList.listData) {
-    temp.listData
-        .add(AlistItemTypeV2(item['from'] as String, item['to'] as String));
-  }
   return temp;
 }
 

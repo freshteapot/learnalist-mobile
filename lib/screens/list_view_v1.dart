@@ -47,10 +47,10 @@ class ListViewV1Screen extends StatelessWidget {
               padding: const EdgeInsets.all(32),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: aList.listData.length,
+              itemCount: aList.getItems().length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('${aList.listData[index]}'),
+                  title: Text('${aList.getItems()[index]}'),
                 );
               },
             ));

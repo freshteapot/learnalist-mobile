@@ -7,8 +7,10 @@ part of 'learnalist.dart';
 // **************************************************************************
 
 ListInfo _$ListInfoFromJson(Map<String, dynamic> json) {
-  return ListInfo(json['title'] as String,
-      _$enumDecode(_$ListTypeEnumMap, json['type']), json['from'] as String);
+  return ListInfo(
+      title: json['title'] as String,
+      listType: _$enumDecode(_$ListTypeEnumMap, json['type']))
+    ..from = json['from'] as String;
 }
 
 Map<String, dynamic> _$ListInfoToJson(ListInfo instance) => <String, dynamic>{

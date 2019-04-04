@@ -47,11 +47,11 @@ class ListViewV2Screen extends StatelessWidget {
               padding: const EdgeInsets.all(32),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: aList.listData.length,
+              itemCount: aList.getItems().length,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(
-                      '${aList.listData[index].from} = ${aList.listData[index].to}'),
+                      '${aList.getItems()[index].from} = ${aList.getItems()[index].to}'),
                 );
               },
             ));

@@ -67,16 +67,16 @@ class ListEditV2ScreenState extends State<ListEditV2Screen> {
                   padding: const EdgeInsets.all(32),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: aList.listData.length,
+                  itemCount: aList.getItems().length,
                   itemBuilder: (context, index) {
-                    final item = aList.listData[index];
+                    final item = aList.getItems()[index];
                     return Dismissible(
                         key: Key(item.hashCode.toString() +
-                            aList.listData.length.toString()),
+                            aList.getItems().length.toString()),
                         onDismissed: (direction) {
                           // Remove the item from our data source.
 
-                          aList.listData.removeAt(index);
+                          aList.removeItem(index);
                           ScopedModel.of<ListsRepository>(context)
                               .updateAlist(aList);
                         },
