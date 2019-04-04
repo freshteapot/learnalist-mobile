@@ -28,7 +28,6 @@ class ListsRepository extends Model {
         }
         Map databaseMap = jsonDecode(jsonAsString);
         _fromTheDatabase = AlistDatabase.fromJson(databaseMap);
-        print('Adding ${_fromTheDatabase.items.length} from the database.');
         _fromTheDatabase.items.forEach((aList) {
           _allLists.add(aList);
         });
@@ -47,8 +46,9 @@ class ListsRepository extends Model {
   // Currently ordered by sort.
   List<Alist> get aLists {
     var temp = _allLists.toList();
-    temp.sort(
-        (Alist a, Alist b) => a.listInfo.title.compareTo(b.listInfo.title));
+    temp.sort((Alist a, Alist b) => a.listInfo.title
+        .toLowerCase()
+        .compareTo(b.listInfo.title.toLowerCase()));
     return temp;
   }
 
@@ -75,6 +75,7 @@ class ListsRepository extends Model {
     _fromTheDatabase.items = _allLists.toList();
 
     String json = jsonEncode(_fromTheDatabase);
+    //print(json);
     storage.saveDatabaseAsString(json).then((success) {
       print('Database updated.');
     });
