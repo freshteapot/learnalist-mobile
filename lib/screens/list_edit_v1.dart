@@ -71,14 +71,13 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
                   itemBuilder: (context, index) {
                     final item = aList.listData[index];
                     return Dismissible(
-                        key: Key(item),
+                        key: Key(item.hashCode.toString() +
+                            aList.listData.length.toString()),
                         onDismissed: (direction) {
                           // Remove the item from our data source.
-                          print(direction);
 
                           aList.listData.removeAt(index);
-                          ScopedModel.of<ListsRepository>(context,
-                                  rebuildOnChange: true)
+                          ScopedModel.of<ListsRepository>(context)
                               .updateAlist(aList);
                           // Then show a snackbar!
                           Scaffold.of(context).showSnackBar(
