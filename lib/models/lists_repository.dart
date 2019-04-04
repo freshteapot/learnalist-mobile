@@ -35,12 +35,12 @@ class ListsRepository extends Model {
         _addFakeData();
         print('loaded');
         print(_allLists.length);
-        return true;
       });
     } catch (e) {
       _addFakeData();
       return false;
     }
+    return true;
   }
 
   // Currently ordered by sort.
