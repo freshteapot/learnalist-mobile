@@ -3,9 +3,8 @@ import 'package:learnalist/models/learnalist.dart';
 import 'package:learnalist/screens/list_view_v1.dart';
 import 'package:learnalist/screens/list_view_v2.dart';
 import 'package:learnalist/screens/list_view_not_found.dart';
-
-// TODO move to be dynamic
-final List<Alist> listOfLists = getLists();
+import 'package:learnalist/models/lists_repository.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class ViewListRoute extends StatelessWidget {
   static String routePrefix = '/list/view';
@@ -14,16 +13,13 @@ class ViewListRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     final ViewListRouteArguments args =
         ModalRoute.of(context).settings.arguments;
-    Alist aList;
-    // If the app is parsing the list we use the object otherwise we do a lookup.
-    if (args.aList != null) {
-      aList = args.aList;
-    } else {
-      // TODO Use real storage
-      aList = listOfLists.singleWhere((aList) => aList.uuid == args.uuid,
-          orElse: () => null);
+    Alist aList = ScopedModel.of<ListsRepository>(context)
+        .aLists
+        .singleWhere((aList) => aList.uuid == args.uuid, orElse: () => null);
+    // TODO remove when this stops happening.
+    if (aList.listData == null) {
+      print('Why is the listdata null');
     }
-
     if (aList.listInfo.listType == ListType.v1) {
       if (aList is! AlistV1) {
         aList = newAlistV1(aList);
