@@ -39,6 +39,22 @@ class V1ListItemV1Form extends StatefulWidget {
 
 class V1ListItemV1FormState extends State<V1ListItemV1Form> {
   final _formKey = GlobalKey<FormState>();
+  FocusNode _firstFocus;
+  String _newItem;
+  @override
+  void initState() {
+    super.initState();
+    _newItem = '';
+    _firstFocus = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed
+    _firstFocus.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +70,16 @@ class V1ListItemV1FormState extends State<V1ListItemV1Form> {
                   children: <Widget>[
                     TextFormField(
                         initialValue: '',
+                        focusNode: _firstFocus,
+                        autofocus: true,
+                        autocorrect: false,
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter some text';
                           }
                         },
                         onSaved: (String value) {
-                          widget.aList.listData.add(value);
+                          _newItem = value;
                         }),
                     ButtonBar(
                       children: [
@@ -74,10 +93,14 @@ class V1ListItemV1FormState extends State<V1ListItemV1Form> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
+
+                              widget.aList.listData.add(_newItem);
+
                               _formKey.currentState.reset();
+                              FocusScope.of(context).requestFocus(_firstFocus);
+
                               // If the form is valid, we want to show a Snackbar
-                              ScopedModel.of<ListsRepository>(context,
-                                      rebuildOnChange: true)
+                              ScopedModel.of<ListsRepository>(context)
                                   .updateAlist(widget.aList);
                             }
                           },

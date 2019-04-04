@@ -39,11 +39,28 @@ class V1ListItemV2Form extends StatefulWidget {
 
 class V1ListItemV2FormState extends State<V1ListItemV2Form> {
   final _formKey = GlobalKey<FormState>();
-  AlistItemTypeV2 newItem;
+  AlistItemTypeV2 _newItem;
+  FocusNode _firstFocus;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _firstFocus = FocusNode();
+    _newItem = new AlistItemTypeV2('', '');
+  }
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed
+    _firstFocus.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey we created above
-    newItem = new AlistItemTypeV2('', '');
     return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,6 +71,9 @@ class V1ListItemV2FormState extends State<V1ListItemV2Form> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     TextFormField(
+                        focusNode: _firstFocus,
+                        autofocus: true,
+                        autocorrect: false,
                         initialValue: '',
                         decoration: InputDecoration(
                           labelText: 'From:',
@@ -64,10 +84,11 @@ class V1ListItemV2FormState extends State<V1ListItemV2Form> {
                           }
                         },
                         onSaved: (String value) {
-                          newItem.from = value;
+                          _newItem.from = value;
                         }),
                     TextFormField(
                         initialValue: '',
+                        autocorrect: false,
                         decoration: InputDecoration(
                           labelText: 'To:',
                         ),
@@ -77,14 +98,15 @@ class V1ListItemV2FormState extends State<V1ListItemV2Form> {
                           }
                         },
                         onSaved: (String value) {
-                          newItem.to = value;
+                          _newItem.to = value;
                         }),
                     ButtonBar(
                       children: [
                         FlatButton(
                           onPressed: () {
                             _formKey.currentState.reset();
-                            newItem = new AlistItemTypeV2('', '');
+                            _newItem = new AlistItemTypeV2('', '');
+                            FocusScope.of(context).requestFocus(_firstFocus);
                           },
                           child: Text('Reset'),
                         ),
@@ -92,13 +114,13 @@ class V1ListItemV2FormState extends State<V1ListItemV2Form> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
-                              widget.aList.listData.add(newItem);
+                              widget.aList.listData.add(_newItem);
 
                               _formKey.currentState.reset();
-                              newItem = new AlistItemTypeV2('', '');
+                              _newItem = new AlistItemTypeV2('', '');
+                              FocusScope.of(context).requestFocus(_firstFocus);
                               // If the form is valid, we want to show a Snackbar
-                              ScopedModel.of<ListsRepository>(context,
-                                      rebuildOnChange: true)
+                              ScopedModel.of<ListsRepository>(context)
                                   .updateAlist(widget.aList);
                             }
                           },
