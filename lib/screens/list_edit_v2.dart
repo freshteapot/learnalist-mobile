@@ -4,6 +4,7 @@ import 'package:learnalist/widgets/list_edit_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:learnalist/screens/list_edit_v2_item.dart';
+import 'package:learnalist/screens/list_delete.dart';
 
 // Create a Form Widget
 class ListEditV2Screen extends StatefulWidget {
@@ -34,6 +35,17 @@ class ListEditV2ScreenState extends State<ListEditV2Screen> {
       appBar: AppBar(
         title: Text("List Edit Screen"),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete_forever),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ListDeleteScreen(aList: widget.aList)),
+              );
+            },
+          ),
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {

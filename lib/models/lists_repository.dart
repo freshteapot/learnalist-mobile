@@ -71,6 +71,12 @@ class ListsRepository extends Model {
     _save();
   }
 
+  void removeAlist(Alist aList) {
+    _allLists.remove(aList);
+    notifyListeners();
+    _save();
+  }
+
   void _save() {
     _fromTheDatabase.items = _allLists.toList();
 
