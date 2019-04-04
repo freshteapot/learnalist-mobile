@@ -34,14 +34,6 @@ class ListEditV2ScreenState extends State<ListEditV2Screen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("List Edit Screen"),
-        leading: new IconButton(
-            icon: new Icon(Icons.arrow_back),
-            onPressed: () {
-              print('Leaving the edit screen, should we hit save here.');
-              Navigator.popAndPushNamed(context, ViewListRoute.routePrefix,
-                  arguments: ViewListRouteArguments(widget.aList.uuid,
-                      aList: widget.aList));
-            }),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
