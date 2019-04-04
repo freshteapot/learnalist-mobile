@@ -18,7 +18,7 @@ class ListEditItemV1Screen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(children: [
-          V1ListItemV1Form(aList),
+          ListItemV1Form(aList),
         ]),
       ),
     );
@@ -26,18 +26,18 @@ class ListEditItemV1Screen extends StatelessWidget {
 }
 
 // Create a Form Widget
-class V1ListItemV1Form extends StatefulWidget {
+class ListItemV1Form extends StatefulWidget {
   final Alist aList;
 
-  V1ListItemV1Form(this.aList);
+  ListItemV1Form(this.aList);
 
   @override
-  V1ListItemV1FormState createState() {
-    return V1ListItemV1FormState();
+  ListItemV1FormState createState() {
+    return ListItemV1FormState();
   }
 }
 
-class V1ListItemV1FormState extends State<V1ListItemV1Form> {
+class ListItemV1FormState extends State<ListItemV1Form> {
   final _formKey = GlobalKey<FormState>();
   FocusNode _firstFocus;
   String _newItem;
