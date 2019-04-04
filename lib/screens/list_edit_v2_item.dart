@@ -39,10 +39,11 @@ class V1ListItemV2Form extends StatefulWidget {
 
 class V1ListItemV2FormState extends State<V1ListItemV2Form> {
   final _formKey = GlobalKey<FormState>();
-  AlistItemTypeV2 newItem = new AlistItemTypeV2('', '');
+  AlistItemTypeV2 newItem;
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey we created above
+    newItem = new AlistItemTypeV2('', '');
     return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,6 +95,7 @@ class V1ListItemV2FormState extends State<V1ListItemV2Form> {
                               widget.aList.listData.add(newItem);
 
                               _formKey.currentState.reset();
+                              newItem = new AlistItemTypeV2('', '');
                               // If the form is valid, we want to show a Snackbar
                               ScopedModel.of<ListsRepository>(context,
                                       rebuildOnChange: true)
