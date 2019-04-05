@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/widgets/menu.dart';
 import 'package:learnalist/routes/routes.dart';
+import 'package:learnalist/importexport/root_route.dart';
+import 'package:learnalist/utils/shared.dart';
 
 class RootScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(context),
       drawer: Menu(),
       body: _buildScreen(context),
     );
   }
 
-  Widget _buildAppBar() {
+  Widget _buildAppBar(BuildContext context) {
     return AppBar(
       title: Text('Top level'),
       actions: <Widget>[
         new IconButton(
-          icon: new Icon(Icons.close),
-          tooltip: 'Closes application',
+          icon: new Icon(Icons.settings),
+          tooltip: 'Settings',
           onPressed: () {
             print('Close the app or something');
+            notImplementedYet(context);
           },
         ),
       ],
@@ -35,7 +38,7 @@ class RootScreen extends StatelessWidget {
             leading: Icon(Icons.add_box),
             title: Text('View lists.'),
             onTap: () {
-              Navigator.popAndPushNamed(context, FindRoute.routePrefix);
+              Navigator.of(context).pushNamed(FindRoute.routePrefix);
             },
           ),
           Divider(),
@@ -61,7 +64,8 @@ class RootScreen extends StatelessWidget {
             leading: Icon(Icons.import_export),
             title: Text('Import / Export database'),
             onTap: () {
-              _notImplementedYet(context);
+              Navigator.of(context)
+                  .pushNamed(ImportExportRootRoute.routePrefix);
             },
           ),
           Divider(),

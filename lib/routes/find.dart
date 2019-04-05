@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/widgets/menu.dart';
 import 'package:learnalist/screens/lists.dart';
 import 'package:learnalist/routes/create.dart';
 
@@ -20,7 +19,6 @@ class FindRoute extends StatelessWidget {
           )
         ],
       ),
-      drawer: Menu(),
       body: ListsScreen(),
     );
   }
