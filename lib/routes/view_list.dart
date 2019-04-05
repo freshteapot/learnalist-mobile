@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/models/learnalist.dart';
-import 'package:learnalist/screens/list_view_v1.dart';
-import 'package:learnalist/screens/list_view_v2.dart';
-import 'package:learnalist/screens/list_view_not_found.dart';
+import 'package:learnalist/screens/list/view/list_view_v1.dart';
+import 'package:learnalist/screens/list/view/list_view_v2.dart';
+import 'package:learnalist/screens/list/view/list_view_not_found.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 

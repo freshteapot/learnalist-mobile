@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/screens/list_create_v2.dart';
+import 'package:learnalist/screens/list/create/list_create_v2.dart';
 
 class CreateListV2Route extends StatelessWidget {
   static String routePrefix = '/create/list/v2';
