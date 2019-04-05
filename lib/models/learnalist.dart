@@ -82,7 +82,7 @@ class AlistV1 extends Alist {
   }
 
   List<String> getItems() {
-    List<String> items = new List<String>();
+    List<String> items = List<String>();
     for (String item in this.listData) {
       items.add(item);
     }
@@ -90,7 +90,25 @@ class AlistV1 extends Alist {
   }
 
   AlistV1({uuid, listInfo, listData})
-      : super(uuid: uuid, listInfo: listInfo, listData: listData);
+      : super(uuid: uuid, listInfo: listInfo, listData: listData) {
+    assert(this.listInfo.listType == ListType.v1);
+    if ((this.listData as List).isEmpty) {
+      return;
+    }
+
+    if ((this.listData as List).isNotEmpty && (this.listData[0] is String)) {
+      return;
+    }
+
+    print('Converting to correct format');
+    List<String> items = List<String>();
+
+    for (String item in this.listData) {
+      items.add(item);
+    }
+    (this.listData as List).clear();
+    (this.listData as List).addAll(items);
+  }
 
   Map<String, dynamic> toJson() => _$AlistV1ToJson(this);
 }
@@ -122,15 +140,33 @@ class AlistV2 extends Alist {
   List<AlistItemTypeV2> getItems() {
     List<AlistItemTypeV2> items = List<AlistItemTypeV2>();
     for (AlistItemTypeV2 item in this.listData) {
-      //items.add(AlistItemTypeV2(item['from'] as String, item['to'] as String));
       items.add(item);
     }
-
     return items;
   }
 
   AlistV2({uuid, listInfo, listData})
-      : super(uuid: uuid, listInfo: listInfo, listData: listData);
+      : super(uuid: uuid, listInfo: listInfo, listData: listData) {
+    assert(this.listInfo.listType == ListType.v2);
+    if ((this.listData as List).isEmpty) {
+      return;
+    }
+
+    if ((this.listData as List).isNotEmpty &&
+        (this.listData[0] is AlistItemTypeV2)) {
+      return;
+    }
+
+    print('Converting to correct format');
+    List<AlistItemTypeV2> items = List<AlistItemTypeV2>();
+
+    for (Map<String, dynamic> item in this.listData) {
+      items.add(AlistItemTypeV2(item['from'] as String, item['to'] as String));
+    }
+    (this.listData as List).clear();
+    (this.listData as List).addAll(items);
+  }
+
   Map<String, dynamic> toJson() => _$AlistV2ToJson(this);
 }
 

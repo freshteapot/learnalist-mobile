@@ -26,13 +26,17 @@ class ListsRepository extends Model {
         if (jsonAsString == '{}') {
           jsonAsString = '{"items":[]}';
         }
+        print(jsonAsString);
         Map databaseMap = jsonDecode(jsonAsString);
         _fromTheDatabase = AlistDatabase.fromJson(databaseMap);
         _fromTheDatabase.items.forEach((aList) {
+          // Maybe in here I need to conver things.
+          print(aList.listInfo.listType.toString());
+          print('Total items is ${aList.listData.length}');
           _allLists.add(aList);
         });
-        print('Adding fake.');
-        _addFakeData();
+        // print('Adding fake.');
+        // _addFakeData();
         print('loaded');
         print(_allLists.length);
       });
