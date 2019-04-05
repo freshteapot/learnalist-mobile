@@ -12,6 +12,12 @@
 
 - Currently focused on getting it up and running on iOS as I do not own an android device.
 
+# Import Export
+To use, you need to fire up the go server. Currently /export only works. Its really slap dash code, with the aim to get the *database* off the iOS device.
+
+```
+go run server/server.go
+```
 
 # Development
 

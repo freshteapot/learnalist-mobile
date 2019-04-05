@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/routes/routes.dart';
+import 'package:learnalist/importexport/root_route.dart';
 
 class LearnalistApp extends StatefulWidget {
   @override
@@ -23,6 +24,9 @@ class _LearnalistAppState extends State<LearnalistApp> {
             CreateListV2Route(),
         ViewListRoute.routePrefix: (BuildContext context) => ViewListRoute(),
         EditListRoute.routePrefix: (BuildContext context) => EditListRoute(),
+        // Import export
+        ImportExportRootRoute.routePrefix: (BuildContext context) =>
+            ImportExportRootRoute(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/create/list') {
