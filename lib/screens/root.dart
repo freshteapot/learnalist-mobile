@@ -78,6 +78,14 @@ class RootScreen extends StatelessWidget {
                       '8b19f084-430d-5dc4-a7a1-f404c85a06b1'));
             },
           ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.add_box),
+            title: Text('Samples of a timer.'),
+            onTap: () {
+              Navigator.of(context).pushNamed('/samples/atimer');
+            },
+          ),
         ],
       ),
     );
