@@ -210,7 +210,6 @@ class TotalRecallV1State extends State<TotalRecallV1> {
 Future<void> actionButtonPressed(
     BuildContext context, GlobalKey<FormState> formKey) async {
   if (formKey.currentState.validate()) {
-    print('Well done');
     notImplementedYet(context);
   }
 }
