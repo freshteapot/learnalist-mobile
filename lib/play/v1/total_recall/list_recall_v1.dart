@@ -43,17 +43,29 @@ class ListRecallV1State extends State<ListRecallV1> {
         });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey we created above
-    List<Widget> widgets = List<Widget>();
+  Widget _renderList() {
+    List<Widget> formWidgets = List<Widget>();
 
     for (var i = 0; i < widget.validItems.length; i++) {
-      widgets.add(_buildField());
+      formWidgets.add(_buildField());
     }
 
-    widgets.add(ButtonBar(
-      children: [
+    // formWidgets.add(_renderActionButtons());
+    return ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(20.0),
+        children: <Widget>[
+          Form(
+              key: _formKey,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: formWidgets)),
+        ]);
+  }
+
+  Widget _renderActionButtons() {
+    return ButtonBar(
+      children: <Widget>[
         FlatButton(
           onPressed: () {
             _formKey.currentState.reset();
@@ -64,22 +76,29 @@ class ListRecallV1State extends State<ListRecallV1> {
           onPressed: () {
             widget.actionButtonPressed(context, _formKey);
           },
-          child: Text('Check'),
+          child: Text('What do you remember?'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Container(
+            child: Center(
+              child: Container(child: _renderList()),
+            ),
+          ),
+        ),
+        Container(
+          child: _renderActionButtons(),
         ),
       ],
     ));
-    // TODO Try this https://github.com/flutter/flutter/issues/13339
-    // Currently setting all to false but maybe we just need to use
-    // SingleChildScrollView.
-    return ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
-        children: <Widget>[
-          Form(
-              key: _formKey,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: widgets)),
-        ]);
   }
 }

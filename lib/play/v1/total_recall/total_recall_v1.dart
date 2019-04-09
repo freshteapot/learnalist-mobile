@@ -20,6 +20,7 @@ enum TotalRecallV1GameState {
   playing,
   recall,
   info,
+  finished,
 }
 
 class TotalRecallV1State extends State<TotalRecallV1> {
@@ -38,13 +39,15 @@ class TotalRecallV1State extends State<TotalRecallV1> {
   @override
   void initState() {
     super.initState();
-    // TODO reduce this to 7 items.
+
     items = widget.aList.getItems();
 
     gameState = TotalRecallV1GameState.start;
   }
 
   void actionStartGame() {
+    var size = items.length >= 7 ? 7 : items.length;
+    items = (widget.aList.getItems()..shuffle()).sublist(0, size);
     gameState = TotalRecallV1GameState.playing;
     reset();
 
@@ -80,7 +83,9 @@ class TotalRecallV1State extends State<TotalRecallV1> {
   }
 
   Widget renderInfo() {
-    return Text('I am info');
+    return Text(
+      'Welcome, its total recall time!\nClick the play button\n7 items will be picked at random.\nHow many can you remember?',
+    );
   }
 
   Widget renderMenu() {
@@ -133,14 +138,8 @@ class TotalRecallV1State extends State<TotalRecallV1> {
   }
 
   Widget renderTestRecall(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text('What do you remember?'),
-          ListRecallV1(
-              actionButtonPressed: actionButtonPressed, validItems: items)
-        ]);
+    return ListRecallV1(
+        actionButtonPressed: actionButtonPressed, validItems: items);
   }
 
   Widget _createLayoutForInfo(BuildContext context) {
@@ -192,6 +191,22 @@ class TotalRecallV1State extends State<TotalRecallV1> {
     return _createLayout(context, main);
   }
 
+  Widget _createLayoutForFinished(BuildContext context) {
+    Widget main = Text(
+      'Well done, you remembered all the items,\n hit the play button to play again.',
+      textAlign: TextAlign.left,
+    );
+
+    return _createLayout(context, main);
+  }
+
+  Future<void> actionButtonPressed(
+      BuildContext context, GlobalKey<FormState> formKey) async {
+    if (formKey.currentState.validate()) {
+      setState(() => gameState = TotalRecallV1GameState.finished);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (gameState == TotalRecallV1GameState.playing) {
@@ -202,14 +217,11 @@ class TotalRecallV1State extends State<TotalRecallV1> {
       return _createLayoutForRecall(context);
     }
 
+    if (gameState == TotalRecallV1GameState.finished) {
+      return _createLayoutForFinished(context);
+    }
+
     // Covers start and info
     return _createLayoutForInfo(context);
-  }
-}
-
-Future<void> actionButtonPressed(
-    BuildContext context, GlobalKey<FormState> formKey) async {
-  if (formKey.currentState.validate()) {
-    notImplementedYet(context);
   }
 }
