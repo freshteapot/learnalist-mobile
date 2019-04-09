@@ -32,7 +32,6 @@ class TotalRecallV1State extends State<TotalRecallV1> {
 
   DateTime alert;
   DateTime startItem;
-  DateTime start;
 
   TotalRecallV1GameState gameState;
 
@@ -64,17 +63,16 @@ class TotalRecallV1State extends State<TotalRecallV1> {
 
   void reset() {
     index = -1;
-    start = DateTime.now();
     startItem = DateTime.now();
   }
 
   void updateItemIndex() {
     var now = DateTime.now();
     var diff = now.difference(startItem);
-    var diffFromStart = now.difference(start);
+
     print('Diff in seconds is ${diff.inSeconds}');
     print(diff);
-    print(diffFromStart);
+
     if (diff.inSeconds >= (howLong - 1)) {
       startItem = DateTime.now();
       index++;
@@ -208,17 +206,6 @@ class TotalRecallV1State extends State<TotalRecallV1> {
     return _createLayoutForInfo(context);
   }
 }
-/*
-String formatDuration(Duration d) {
-  String f(int n) {
-    return n.toString().padLeft(2, '0');
-  }
-
-  // We want to round up the remaining time to the nearest second
-  d += Duration(microseconds: 999999);
-  return "${f(d.inMinutes)}:${f(d.inSeconds % 60)}";
-}
-*/
 
 Future<void> actionButtonPressed(
     BuildContext context, GlobalKey<FormState> formKey) async {

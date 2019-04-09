@@ -15,12 +15,10 @@ class ListRecallV1 extends StatefulWidget {
 class ListRecallV1State extends State<ListRecallV1> {
   final _formKey = GlobalKey<FormState>();
   FocusNode _firstFocus;
-  // List<String> _items;
 
   @override
   void initState() {
     super.initState();
-    // _items = [];
     _firstFocus = FocusNode();
   }
 
