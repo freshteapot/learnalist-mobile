@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/routes/routes.dart';
 import 'package:learnalist/importexport/root_route.dart';
+import 'package:learnalist/samples/atimer.dart';
 
 class LearnalistApp extends StatefulWidget {
   @override
@@ -27,6 +28,9 @@ class _LearnalistAppState extends State<LearnalistApp> {
         // Import export
         ImportExportRootRoute.routePrefix: (BuildContext context) =>
             ImportExportRootRoute(),
+
+        // Samples
+        '/samples/atimer': (BuildContext context) => SampleATimer(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/create/list') {
