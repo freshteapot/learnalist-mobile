@@ -156,7 +156,6 @@ class TotalRecallV1State extends State<TotalRecallV1> {
         ),
         Expanded(
           child: Container(
-            color: Colors.yellow,
             child: Center(
               child: Container(child: main),
             ),
