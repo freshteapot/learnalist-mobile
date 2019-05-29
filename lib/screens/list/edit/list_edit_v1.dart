@@ -19,11 +19,11 @@ class ListEditV1Screen extends StatefulWidget {
 }
 
 class ListEditV1ScreenState extends State<ListEditV1Screen> {
-  void onSaveListInfo(String value) {
+  void onSaveListInfo(String value) async {
     bool hasChanged = widget.aList.info.title != value;
     if (hasChanged) {
       widget.aList.info.title = value;
-      ScopedModel.of<ListsRepository>(context, rebuildOnChange: true)
+      await ScopedModel.of<ListsRepository>(context, rebuildOnChange: true)
           .updateAlist(widget.aList);
     }
   }
@@ -84,11 +84,11 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
                     return Dismissible(
                         key: Key(item.hashCode.toString() +
                             aList.getItems().length.toString()),
-                        onDismissed: (direction) {
+                        onDismissed: (direction) async {
                           // Remove the item from our data source.
 
                           aList.removeItem(index);
-                          ScopedModel.of<ListsRepository>(context)
+                          await ScopedModel.of<ListsRepository>(context)
                               .updateAlist(aList);
                           // Then show a snackbar!
                           Scaffold.of(context).showSnackBar(

@@ -20,11 +20,14 @@ class ListCreateV2ScreenState extends State<ListCreateV2Screen> {
     aList = newEmptyAlistV2();
   }
 
-  void onSaveListInfo(String value) {
+  void onSaveListInfo(String value) async {
     bool hasChanged = aList.info.title != value;
     if (hasChanged) {
       aList.info.title = value;
-      ScopedModel.of<ListsRepository>(context).updateAlist(aList);
+      var saved =
+          await ScopedModel.of<ListsRepository>(context).addAlist(aList);
+      // It makes the different because we get a new uuid from the server.
+      aList = AlistV2(saved);
       Navigator.of(context).popAndPushNamed(ViewListRoute.routePrefix,
           arguments: ViewListRouteArguments(aList.uuid));
     }

@@ -68,7 +68,83 @@ class Api {
     }
   }
 
-  // TODO post list
+  Future<Alist> postAlist(Alist aList) async {
+    var endpointUri = Uri.parse(endpoint);
+    var suffix = '/alist';
+    var path = endpointUri.path + suffix;
+
+    var uri =
+        Uri(scheme: endpointUri.scheme, host: endpointUri.host, path: path);
+
+    var headers = {
+      HttpHeaders.authorizationHeader: "Basic $basicAuth",
+      HttpHeaders.contentTypeHeader: 'application/json'
+    };
+    var body = json.encode(aList);
+    var response = await client.post(uri, headers: headers, body: body);
+
+    if (response.statusCode == 201) {
+      return Alist.fromJson(json.decode(response.body));
+    }
+
+    print('Failed to post');
+    print(response.statusCode);
+    print(response.body);
+    throw Exception('Failed to post list :(');
+  }
+
   // TODO put list
+  Future<Alist> putAlist(Alist aList) async {
+    var endpointUri = Uri.parse(endpoint);
+    var suffix = '/alist/' + aList.uuid;
+    var path = endpointUri.path + suffix;
+
+    var uri =
+        Uri(scheme: endpointUri.scheme, host: endpointUri.host, path: path);
+
+    var headers = {
+      HttpHeaders.authorizationHeader: "Basic $basicAuth",
+      HttpHeaders.contentTypeHeader: 'application/json'
+    };
+    var body = json.encode(aList);
+    var response = await client.put(uri, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      return Alist.fromJson(json.decode(response.body));
+    }
+    if (response.statusCode == 400) {
+      print('How to handle error messages back up the stack');
+    }
+    print('Failed to post');
+    print(response.statusCode);
+    print(response.body);
+    throw Exception('Failed to put list :(');
+  }
   // TODO delete list
+
+  Future<void> removeAlist(Alist aList) async {
+    var endpointUri = Uri.parse(endpoint);
+    var suffix = '/alist/' + aList.uuid;
+    var path = endpointUri.path + suffix;
+
+    var uri =
+        Uri(scheme: endpointUri.scheme, host: endpointUri.host, path: path);
+
+    var headers = {
+      HttpHeaders.authorizationHeader: "Basic $basicAuth",
+      HttpHeaders.contentTypeHeader: 'application/json'
+    };
+
+    var response = await client.delete(uri, headers: headers);
+
+    if (response.statusCode == 200 || response.statusCode == 404) {
+      print(response.body);
+      return true;
+    }
+
+    print('Failed to remove list');
+    print(response.statusCode);
+    print(response.body);
+    throw Exception('Failed to remove list :(');
+  }
 }

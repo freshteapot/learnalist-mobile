@@ -21,9 +21,9 @@ class ListDeleteScreen extends StatelessWidget {
         child: Column(children: [
           FlatButton(
             child: Text('I want to hide all evidence of this list.'),
-            onPressed: () {
+            onPressed: () async {
               print('Back to the future.');
-              ScopedModel.of<ListsRepository>(context).removeAlist(aList);
+              await ScopedModel.of<ListsRepository>(context).removeAlist(aList);
               Navigator.pushNamedAndRemoveUntil(context, FindRoute.routePrefix,
                   ModalRoute.withName(FindRoute.routePrefix));
             },

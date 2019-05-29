@@ -38,24 +38,45 @@ class ListsRepository extends Model {
         orElse: () => null);
   }
 
-  void addList() {
-    print('addList');
+  Future<Alist> addAlist(Alist aList) async {
+    // TODO how should we handle the exception.
+    // Currently letting it bubble up.
+    var api = Api();
+    var serverAlist = await api.postAlist(aList);
+    _allLists.add(serverAlist);
+    notifyListeners();
+    // Not calling save at the moment.
+    // _save();
+    return serverAlist;
   }
 
-  void updateAlist(Alist aList) {
+  Future<Alist> updateAlist(Alist aList) async {
+    var api = Api();
+    var serverAlist = await api.putAlist(aList);
+    print(aList);
+    print(serverAlist);
+
     Alist current = _allLists.singleWhere(
         (current) => aList.uuid == current.uuid,
         orElse: () => null);
     _allLists.remove(current);
     _allLists.add(aList);
     notifyListeners();
-    _save();
+
+    return aList;
+    //_save();
   }
 
-  void removeAlist(Alist aList) {
-    _allLists.remove(aList);
+  Future<void> removeAlist(Alist aList) async {
+    var api = Api();
+    await api.removeAlist(aList);
+
+    Alist current = _allLists.singleWhere(
+        (current) => aList.uuid == current.uuid,
+        orElse: () => null);
+    _allLists.remove(current);
     notifyListeners();
-    _save();
+    // _save();
   }
 
   void _save() {

@@ -90,7 +90,7 @@ class ListItemV1FormState extends State<ListItemV1Form> {
                           child: Text('Reset'),
                         ),
                         RaisedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
 
@@ -100,7 +100,7 @@ class ListItemV1FormState extends State<ListItemV1Form> {
                               FocusScope.of(context).requestFocus(_firstFocus);
 
                               // If the form is valid, we want to show a Snackbar
-                              ScopedModel.of<ListsRepository>(context)
+                              await ScopedModel.of<ListsRepository>(context)
                                   .updateAlist(widget.aList);
                             }
                           },
