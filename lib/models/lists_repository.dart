@@ -11,6 +11,7 @@ class ListsRepository extends Model {
 
   Future<bool> loadLists() async {
     try {
+      // Reduce all the creations of the api.
       var api = Api();
       var lists = await api.getUsersLists();
       lists.forEach((aList) {
@@ -42,8 +43,7 @@ class ListsRepository extends Model {
     var serverAlist = await api.postAlist(aList);
     _allLists.add(serverAlist);
     notifyListeners();
-    // Not calling save at the moment.
-    // _save();
+
     return serverAlist;
   }
 
@@ -61,7 +61,6 @@ class ListsRepository extends Model {
     notifyListeners();
 
     return aList;
-    //_save();
   }
 
   Future<void> removeAlist(Alist aList) async {
@@ -73,19 +72,5 @@ class ListsRepository extends Model {
         orElse: () => null);
     _allLists.remove(current);
     notifyListeners();
-    // _save();
-  }
-
-  void _save() {
-    // TODO
-    /*
-    _fromTheDatabase.items = _allLists.toList();
-
-    String json = jsonEncode(_fromTheDatabase);
-    //print(json);
-    storage.saveDatabaseAsString(json).then((success) {
-      print('Database updated.');
-    });
-    */
   }
 }
