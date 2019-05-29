@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/screens/list/view/list_view_v1.dart';
 import 'package:learnalist/screens/list/view/list_view_v2.dart';
 import 'package:learnalist/screens/list/view/list_view_not_found.dart';
@@ -17,16 +17,16 @@ class ViewListRoute extends StatelessWidget {
         .aLists
         .singleWhere((aList) => aList.uuid == args.uuid, orElse: () => null);
     // TODO remove when this stops happening.
-    if (aList.listData == null) {
+    if (aList.data == null) {
       print('Why is the listdata null');
     }
-    if (aList.listInfo.listType == ListType.v1) {
+    if (aList.info.listType == ListType.v1) {
       if (aList is! AlistV1) {
         aList = newAlistV1(aList);
       }
       return ListViewV1Screen(aList: aList);
     }
-    if (aList.listInfo.listType == ListType.v2) {
+    if (aList.info.listType == ListType.v2) {
       if (aList is! AlistV2) {
         aList = newAlistV2(aList);
       }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 

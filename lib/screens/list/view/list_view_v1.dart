@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/screens/list/play/list_play_v1_total_recall.dart';
 import 'package:learnalist/widgets/list_view_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';

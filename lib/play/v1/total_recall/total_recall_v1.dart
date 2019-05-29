@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:learnalist/play/v1/total_recall/list_recall_v1.dart';
 import 'package:learnalist/utils/shared.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 
 class TotalRecallV1 extends StatefulWidget {
   final AlistV1 aList;

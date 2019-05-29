@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 
 class EditListInfo extends StatefulWidget {
   const EditListInfo({
@@ -33,7 +33,7 @@ class EditListInfoState extends State<EditListInfo> {
                     child: Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: TextFormField(
-                        initialValue: widget.aList.listInfo.title,
+                        initialValue: widget.aList.info.title,
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter some text';

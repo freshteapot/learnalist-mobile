@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -39,7 +39,7 @@ class ListItemV2Form extends StatefulWidget {
 
 class ListItemV2FormState extends State<ListItemV2Form> {
   final _formKey = GlobalKey<FormState>();
-  AlistItemTypeV2 _newItem;
+  TypeV2Item _newItem;
   FocusNode _firstFocus;
 
   @override
@@ -47,7 +47,7 @@ class ListItemV2FormState extends State<ListItemV2Form> {
     super.initState();
 
     _firstFocus = FocusNode();
-    _newItem = new AlistItemTypeV2('', '');
+    _newItem = new TypeV2Item('', '');
   }
 
   @override
@@ -105,7 +105,7 @@ class ListItemV2FormState extends State<ListItemV2Form> {
                         FlatButton(
                           onPressed: () {
                             _formKey.currentState.reset();
-                            _newItem = new AlistItemTypeV2('', '');
+                            _newItem = new TypeV2Item('', '');
                             FocusScope.of(context).requestFocus(_firstFocus);
                           },
                           child: Text('Reset'),
@@ -117,7 +117,7 @@ class ListItemV2FormState extends State<ListItemV2Form> {
                               widget.aList.addItem(_newItem);
 
                               _formKey.currentState.reset();
-                              _newItem = new AlistItemTypeV2('', '');
+                              _newItem = new TypeV2Item('', '');
                               FocusScope.of(context).requestFocus(_firstFocus);
                               // If the form is valid, we want to show a Snackbar
                               ScopedModel.of<ListsRepository>(context)

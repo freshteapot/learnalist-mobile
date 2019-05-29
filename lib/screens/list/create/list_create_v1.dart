@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/widgets/list_edit_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -21,9 +21,9 @@ class ListCreateV1ScreenState extends State<ListCreateV1Screen> {
   }
 
   void onSaveListInfo(String value) {
-    bool hasChanged = aList.listInfo.title != value;
+    bool hasChanged = aList.info.title != value;
     if (hasChanged) {
-      aList.listInfo.title = value;
+      aList.info.title = value;
       ScopedModel.of<ListsRepository>(context).updateAlist(aList);
       Navigator.of(context).popAndPushNamed(ViewListRoute.routePrefix,
           arguments: ViewListRouteArguments(aList.uuid));
