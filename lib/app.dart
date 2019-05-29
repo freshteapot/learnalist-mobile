@@ -59,7 +59,7 @@ class _LearnalistAppState extends State<LearnalistApp> {
     // Show the routes in the app and the class.
     // TODO remove before production?
     app.routes.forEach((k, v) {
-      print('${k}: ${v}');
+      print('$k: $v');
     });
 
     return app;

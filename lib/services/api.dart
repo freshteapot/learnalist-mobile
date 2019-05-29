@@ -93,7 +93,6 @@ class Api {
     throw Exception('Failed to post list :(');
   }
 
-  // TODO put list
   Future<Alist> putAlist(Alist aList) async {
     var endpointUri = Uri.parse(endpoint);
     var suffix = '/alist/' + aList.uuid;
@@ -120,7 +119,6 @@ class Api {
     print(response.body);
     throw Exception('Failed to put list :(');
   }
-  // TODO delete list
 
   Future<void> removeAlist(Alist aList) async {
     var endpointUri = Uri.parse(endpoint);

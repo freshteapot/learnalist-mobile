@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:learnalist/storage/file.dart';
-// import 'learnalist.dart';
-
 import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/services/api.dart';
 
