@@ -39,7 +39,6 @@ class TotalRecallV1State extends State<TotalRecallV1> {
   @override
   void initState() {
     super.initState();
-
     items = widget.aList.getItems();
 
     gameState = TotalRecallV1GameState.start;
@@ -157,7 +156,6 @@ class TotalRecallV1State extends State<TotalRecallV1> {
         ),
         Expanded(
           child: Container(
-            color: Colors.yellow,
             child: Center(
               child: Container(child: main),
             ),
