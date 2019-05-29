@@ -15,15 +15,18 @@ class Info {
   List<String> labels;
 
   Info({this.title, this.listType, this.labels});
-  //Info(this.title, this.listType, this.labels);
 
   Info.fromJson(Map<String, dynamic> json)
       : title = json['title'],
         listType = json['type'],
         labels = List<String>.from(json['labels']);
 
-  Map<String, dynamic> toJson() =>
-      {'title': title, 'type': listType, 'labels': labels};
+  Map<String, dynamic> toJson() {
+    if (labels == null) {
+      labels = List<String>(0);
+    }
+    return {'title': title, 'type': listType, 'labels': labels};
+  }
 
   @override
   String toString() {
