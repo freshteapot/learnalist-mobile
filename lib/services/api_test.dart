@@ -1,8 +1,13 @@
 import 'package:learnalist/models/alist.dart';
+import 'package:learnalist/models/server_credentials.dart';
 import 'package:learnalist/services/api.dart';
 
 void main() async {
-  var api = Api();
+  var credentials = ServerCredentials(
+      username: 'freshteapot', basicAuth: 'FAKE', server: SERVER_HINT);
+  assert(
+      credentials.basicAuth != 'FAKE', 'Manually change this before testing');
+  var api = Api(credentials);
   /*
   //var items = await api.getUsersLists();
   //print(items);

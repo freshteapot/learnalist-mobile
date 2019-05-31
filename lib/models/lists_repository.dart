@@ -1,22 +1,26 @@
+import 'package:learnalist/models/server_credentials.dart';
+import 'package:learnalist/services/credentials.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:learnalist/storage/file.dart';
+import 'package:learnalist/storage/database.dart';
 import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/services/api.dart';
 
 class ListsRepository extends Model {
-  FileStorage storage;
-  ListsRepository(this.storage);
+  DatabaseStorage storage;
+  Credentials credentials;
+  Api api;
+  ListsRepository({this.storage, this.credentials, this.api});
 
   Set<Alist> _allLists = Set<Alist>();
-
   Future<bool> loadLists() async {
     try {
+      _allLists.clear();
       // Reduce all the creations of the api.
-      var api = Api();
       var lists = await api.getUsersLists();
       lists.forEach((aList) {
         _allLists.add(aList);
       });
+      notifyListeners();
     } catch (e) {
       return false;
     }
@@ -39,7 +43,6 @@ class ListsRepository extends Model {
   Future<Alist> addAlist(Alist aList) async {
     // TODO how should we handle the exception.
     // Currently letting it bubble up.
-    var api = Api();
     var serverAlist = await api.postAlist(aList);
     _allLists.add(serverAlist);
     notifyListeners();
@@ -48,7 +51,6 @@ class ListsRepository extends Model {
   }
 
   Future<Alist> updateAlist(Alist aList) async {
-    var api = Api();
     var serverAlist = await api.putAlist(aList);
     print(aList);
     print(serverAlist);
@@ -64,7 +66,6 @@ class ListsRepository extends Model {
   }
 
   Future<void> removeAlist(Alist aList) async {
-    var api = Api();
     await api.removeAlist(aList);
 
     Alist current = _allLists.singleWhere(
@@ -72,5 +73,13 @@ class ListsRepository extends Model {
         orElse: () => null);
     _allLists.remove(current);
     notifyListeners();
+  }
+
+  // TODO move to its own model
+  Future<bool> saveCredentials(ServerCredentials input) async {
+    // TODO - should we also remove any cached data here from a remote server?
+    await credentials.save(input);
+    await loadLists();
+    return true;
   }
 }

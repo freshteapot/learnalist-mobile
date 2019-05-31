@@ -3,18 +3,23 @@ import 'dart:io';
 import 'package:learnalist/models/alist.dart';
 
 import 'package:http/http.dart' as http;
-
-var basicAuth = '';
+import 'package:learnalist/services/credentials.dart';
 
 /// The service responsible for networking requests
 class Api {
-  static const endpoint = 'https://learnalist.net/api/v1';
+  Credentials credentials;
+  Api(credentials) {
+    this.credentials = credentials;
+    print(this.credentials);
+  }
 
   var client = new http.Client();
   // TODO add timeout
   // client.connectionTimeout = const Duration(seconds: 5);
 
   Future<List<Alist>> getUsersLists({List<String> labels, String type}) async {
+    String endpoint = credentials.getServer();
+    String basicAuth = credentials.getBasicAuth();
     var endpointUri = Uri.parse(endpoint);
     Map<String, dynamic> q = Map();
     if (labels != null) {
@@ -49,6 +54,8 @@ class Api {
   }
 
   Future<Alist> getAlistByUUID(String uuid) async {
+    String endpoint = credentials.getServer();
+    String basicAuth = credentials.getBasicAuth();
     var endpointUri = Uri.parse(endpoint);
     var suffix = '/alist/$uuid';
     var path = endpointUri.path + suffix;
@@ -69,6 +76,8 @@ class Api {
   }
 
   Future<Alist> postAlist(Alist aList) async {
+    String endpoint = credentials.getServer();
+    String basicAuth = credentials.getBasicAuth();
     var endpointUri = Uri.parse(endpoint);
     var suffix = '/alist';
     var path = endpointUri.path + suffix;
@@ -94,6 +103,8 @@ class Api {
   }
 
   Future<Alist> putAlist(Alist aList) async {
+    String endpoint = credentials.getServer();
+    String basicAuth = credentials.getBasicAuth();
     var endpointUri = Uri.parse(endpoint);
     var suffix = '/alist/' + aList.uuid;
     var path = endpointUri.path + suffix;
@@ -121,6 +132,8 @@ class Api {
   }
 
   Future<void> removeAlist(Alist aList) async {
+    String endpoint = credentials.getServer();
+    String basicAuth = credentials.getBasicAuth();
     var endpointUri = Uri.parse(endpoint);
     var suffix = '/alist/' + aList.uuid;
     var path = endpointUri.path + suffix;

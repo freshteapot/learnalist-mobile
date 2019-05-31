@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:learnalist/models/lists_repository.dart';
 import 'package:learnalist/routes/routes.dart';
 import 'package:learnalist/importexport/root_route.dart';
 import 'package:learnalist/samples/atimer.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class LearnalistApp extends StatefulWidget {
+  final String startAt;
+  LearnalistApp({Key key, @required this.startAt}) : super(key: key);
+
   @override
   _LearnalistAppState createState() => _LearnalistAppState();
 }
@@ -11,9 +16,24 @@ class LearnalistApp extends StatefulWidget {
 class _LearnalistAppState extends State<LearnalistApp> {
   @override
   Widget build(BuildContext context) {
+    var storage = ScopedModel.of<ListsRepository>(context).storage;
+    print(storage.getDatabase());
+    // TODO - Check on the state of the app.
+    // TODO - Last screen?
+    // TODO - should we show the options screen.
+
+    var listsRepository = ScopedModel.of<ListsRepository>(context);
+    listsRepository.loadLists();
+    print('After loading the lists');
+
+    var startAt = RootRoute.routePrefix;
+    if (widget.startAt.isNotEmpty) {
+      startAt = widget.startAt;
+    }
+
     final MaterialApp app = MaterialApp(
       title: 'Learnalist',
-      initialRoute: '/',
+      initialRoute: startAt,
       routes: <String, WidgetBuilder>{
         RootRoute.routePrefix: (BuildContext context) => RootRoute(),
         FindRoute.routePrefix: (BuildContext context) => FindRoute(),
@@ -28,6 +48,8 @@ class _LearnalistAppState extends State<LearnalistApp> {
         // Import export
         ImportExportRootRoute.routePrefix: (BuildContext context) =>
             ImportExportRootRoute(),
+        ServerOptionsRoute.routePrefix: (BuildContext context) =>
+            ServerOptionsRoute(),
 
         // Samples
         '/samples/atimer': (BuildContext context) => SampleATimer(),
