@@ -26,7 +26,7 @@ class ListCreateV2ScreenState extends State<ListCreateV2Screen> {
       aList.info.title = value;
       var saved =
           await ScopedModel.of<ListsRepository>(context).addAlist(aList);
-      // It makes the different because we get a new uuid from the server.
+      // It makes the difference because we get a new uuid from the server.
       aList = AlistV2(saved);
       Navigator.of(context).popAndPushNamed(ViewListRoute.routePrefix,
           arguments: ViewListRouteArguments(aList.uuid));

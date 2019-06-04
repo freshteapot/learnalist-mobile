@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:learnalist/routes/routes.dart';
 import 'package:learnalist/importexport/root_route.dart';
-import 'package:learnalist/samples/atimer.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class LearnalistApp extends StatefulWidget {
@@ -16,15 +15,12 @@ class LearnalistApp extends StatefulWidget {
 class _LearnalistAppState extends State<LearnalistApp> {
   @override
   Widget build(BuildContext context) {
-    var storage = ScopedModel.of<ListsRepository>(context).storage;
-    print(storage.getDatabase());
     // TODO - Check on the state of the app.
     // TODO - Last screen?
     // TODO - should we show the options screen.
 
     var listsRepository = ScopedModel.of<ListsRepository>(context);
     listsRepository.loadLists();
-    print('After loading the lists');
 
     var startAt = RootRoute.routePrefix;
     if (widget.startAt.isNotEmpty) {
@@ -54,9 +50,6 @@ class _LearnalistAppState extends State<LearnalistApp> {
             ImportExportRootRoute(),
         ServerOptionsRoute.routePrefix: (BuildContext context) =>
             ServerOptionsRoute(),
-
-        // Samples
-        '/samples/atimer': (BuildContext context) => SampleATimer(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/create/list') {

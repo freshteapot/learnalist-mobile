@@ -15,7 +15,6 @@ class ListsRepository extends Model {
   Future<bool> loadLists() async {
     try {
       _allLists.clear();
-      // Reduce all the creations of the api.
       var lists = await api.getUsersLists();
       lists.forEach((aList) {
         _allLists.add(aList);
@@ -51,8 +50,8 @@ class ListsRepository extends Model {
   }
 
   Future<Alist> updateAlist(Alist aList) async {
+    // Currently only supporting the happy path.
     var serverAlist = await api.putAlist(aList);
-    print(aList);
     print(serverAlist);
 
     Alist current = _allLists.singleWhere(
@@ -77,7 +76,6 @@ class ListsRepository extends Model {
 
   // TODO move to its own model
   Future<bool> saveCredentials(ServerCredentials input) async {
-    // TODO - should we also remove any cached data here from a remote server?
     await credentials.save(input);
     await loadLists();
     return true;
