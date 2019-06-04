@@ -4,10 +4,10 @@ import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 // Create a Form Widget
-class ListEditItemV2Screen extends StatelessWidget {
-  final AlistV2 aList;
+class ListEditItemV4Screen extends StatelessWidget {
+  final AlistV4 aList;
 
-  ListEditItemV2Screen({Key key, @required this.aList}) : super(key: key);
+  ListEditItemV4Screen({Key key, @required this.aList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class ListEditItemV2Screen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(children: [
-          ListItemV2Form(aList),
+          ListItemV4Form(aList),
         ]),
       ),
     );
@@ -26,20 +26,20 @@ class ListEditItemV2Screen extends StatelessWidget {
 }
 
 // Create a Form Widget
-class ListItemV2Form extends StatefulWidget {
-  final AlistV2 aList;
+class ListItemV4Form extends StatefulWidget {
+  final AlistV4 aList;
 
-  ListItemV2Form(this.aList);
+  ListItemV4Form(this.aList);
 
   @override
-  ListItemV2FormState createState() {
-    return ListItemV2FormState();
+  ListItemV4FormState createState() {
+    return ListItemV4FormState();
   }
 }
 
-class ListItemV2FormState extends State<ListItemV2Form> {
+class ListItemV4FormState extends State<ListItemV4Form> {
   final _formKey = GlobalKey<FormState>();
-  TypeV2Item _newItem;
+  TypeV4Item _newItem;
   FocusNode _firstFocus;
 
   @override
@@ -47,7 +47,7 @@ class ListItemV2FormState extends State<ListItemV2Form> {
     super.initState();
 
     _firstFocus = FocusNode();
-    _newItem = new TypeV2Item('', '');
+    _newItem = new TypeV4Item('', '');
   }
 
   @override
@@ -76,36 +76,36 @@ class ListItemV2FormState extends State<ListItemV2Form> {
                         autocorrect: false,
                         initialValue: '',
                         decoration: InputDecoration(
-                          labelText: 'From:',
+                          labelText: 'Content:',
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Please enter some content / text.';
                           }
                         },
                         onSaved: (String value) {
-                          _newItem.from = value;
+                          _newItem.content = value;
                         }),
                     TextFormField(
                         initialValue: '',
                         autocorrect: false,
                         decoration: InputDecoration(
-                          labelText: 'To:',
+                          labelText: 'Url:',
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Please enter the url / reference.';
                           }
                         },
                         onSaved: (String value) {
-                          _newItem.to = value;
+                          _newItem.url = value;
                         }),
                     ButtonBar(
                       children: [
                         FlatButton(
                           onPressed: () {
                             _formKey.currentState.reset();
-                            _newItem = new TypeV2Item('', '');
+                            _newItem = new TypeV4Item('', '');
                             FocusScope.of(context).requestFocus(_firstFocus);
                           },
                           child: Text('Reset'),
@@ -117,7 +117,7 @@ class ListItemV2FormState extends State<ListItemV2Form> {
                               widget.aList.addItem(_newItem);
 
                               _formKey.currentState.reset();
-                              _newItem = new TypeV2Item('', '');
+                              _newItem = new TypeV4Item('', '');
                               FocusScope.of(context).requestFocus(_firstFocus);
                               // If the form is valid, we want to show a Snackbar
                               ScopedModel.of<ListsRepository>(context)

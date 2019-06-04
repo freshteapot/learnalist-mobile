@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/models/alist.dart';
-import 'package:learnalist/screens/list/play/list_play_v1_total_recall.dart';
 import 'package:learnalist/widgets/list_view_list_info.dart';
-import 'package:learnalist/models/lists_repository.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:learnalist/routes/edit_list.dart';
 import 'package:learnalist/routes/find.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:learnalist/models/lists_repository.dart';
 
-class ListViewV1Screen extends StatelessWidget {
-  final AlistV1 aList;
+class ListViewV3Screen extends StatelessWidget {
+  final AlistV3 aList;
 
-  ListViewV1Screen({Key key, @required this.aList}) : super(key: key);
+  ListViewV3Screen({Key key, @required this.aList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +22,6 @@ class ListViewV1Screen extends StatelessWidget {
               Navigator.popAndPushNamed(context, FindRoute.routePrefix);
             }),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.play_arrow),
-            onPressed: () {
-              _showPlayMenu(context, aList);
-            },
-          ),
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {
@@ -48,7 +41,7 @@ class ListViewV1Screen extends StatelessWidget {
     );
   }
 
-  Widget _buildList(AlistV1 aList) {
+  Widget _buildList(AlistV3 aList) {
     return ScopedModelDescendant<ListsRepository>(
         builder: (context, child, storage) => ListView.builder(
               padding: const EdgeInsets.all(32),
@@ -57,38 +50,10 @@ class ListViewV1Screen extends StatelessWidget {
               itemCount: aList.getItems().length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('${aList.getItems()[index]}'),
+                  title: Text(
+                      '${aList.getItems()[index].overall.distance} = ${aList.getItems()[index].overall.time}'),
                 );
               },
             ));
   }
-}
-
-void _showPlayMenu(BuildContext context, AlistV1 aList) {
-  showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            new ListTile(
-                leading: new Icon(Icons.memory),
-                title: new Text('Total recall'),
-                onTap: () async {
-                  _openDialog(
-                      context, ListPlayV1TotalRecallScreen(aList: aList));
-                }),
-          ],
-        );
-      });
-}
-
-Future _openDialog(BuildContext context, Widget screen) async {
-  await Navigator.of(context).push(new MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return screen;
-      },
-      fullscreenDialog: true));
-  // Now we close the menu after as we dont want to see it.
-  Navigator.pop(context);
 }

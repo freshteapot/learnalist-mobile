@@ -9,7 +9,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 // import 'package:learnalist/main.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 
 void main() {
   test('Test list basic', () {

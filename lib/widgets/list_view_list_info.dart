@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 
 Widget buildTitleSection(Alist aList) {
   Widget titleSection = Container(
@@ -15,7 +15,7 @@ Widget buildTitleSection(Alist aList) {
               Container(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
-                  aList.listInfo.title,
+                  aList.info.title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

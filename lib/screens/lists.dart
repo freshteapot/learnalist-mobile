@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/routes/view_list.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -24,7 +24,7 @@ class ListsScreen extends StatelessWidget {
 ListTile aListTile(BuildContext context, Alist aList) {
   final IconData icon = Icons.toc;
   return ListTile(
-    title: Text(aList.listInfo.title,
+    title: Text(aList.info.title,
         style: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 20,

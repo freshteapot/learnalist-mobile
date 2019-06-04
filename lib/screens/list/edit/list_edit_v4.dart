@@ -3,27 +3,28 @@ import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/widgets/list_edit_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:learnalist/screens/list/edit/list_edit_v1_item.dart';
+import 'package:learnalist/screens/list/edit/list_edit_v4_item.dart';
 import 'package:learnalist/screens/list/list_delete.dart';
 
 // Create a Form Widget
-class ListEditV1Screen extends StatefulWidget {
-  final AlistV1 aList;
+class ListEditV4Screen extends StatefulWidget {
+  final AlistV4 aList;
 
-  ListEditV1Screen({Key key, @required this.aList}) : super(key: key);
+  ListEditV4Screen({Key key, @required this.aList}) : super(key: key);
 
   @override
-  ListEditV1ScreenState createState() {
-    return ListEditV1ScreenState();
+  ListEditV4ScreenState createState() {
+    return ListEditV4ScreenState();
   }
 }
 
-class ListEditV1ScreenState extends State<ListEditV1Screen> {
-  void onSaveListInfo(String value) async {
+class ListEditV4ScreenState extends State<ListEditV4Screen> {
+  void onSaveListInfo(String value) {
     bool hasChanged = widget.aList.info.title != value;
     if (hasChanged) {
       widget.aList.info.title = value;
-      await ScopedModel.of<ListsRepository>(context, rebuildOnChange: true)
+
+      ScopedModel.of<ListsRepository>(context, rebuildOnChange: true)
           .updateAlist(widget.aList);
     }
   }
@@ -52,7 +53,7 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        ListEditItemV1Screen(aList: widget.aList)),
+                        ListEditItemV4Screen(aList: widget.aList)),
               );
             },
           ),
@@ -71,7 +72,7 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
     );
   }
 
-  Widget _buildListItems(AlistV1 aList) {
+  Widget _buildListItems(AlistV4 aList) {
     return Flexible(
         child: ScopedModelDescendant<ListsRepository>(
             builder: (context, child, storage) => ListView.builder(
@@ -84,27 +85,18 @@ class ListEditV1ScreenState extends State<ListEditV1Screen> {
                     return Dismissible(
                         key: Key(item.hashCode.toString() +
                             aList.getItems().length.toString()),
-                        onDismissed: (direction) async {
+                        onDismissed: (direction) {
                           // Remove the item from our data source.
 
                           aList.removeItem(index);
-                          await ScopedModel.of<ListsRepository>(context)
+                          ScopedModel.of<ListsRepository>(context)
                               .updateAlist(aList);
-                          // Then show a snackbar!
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text("$item dismissed")));
                         },
                         // Show a red background as the item is swiped away
                         background: Container(color: Colors.red),
                         child: ListTile(
-                          title: Text('$item'),
-                          /*
-                          onTap: () {
-                            FocusScope.of(context)
-                                .requestFocus(new FocusNode());
-                            print('edit - create a pop up with the add.');
-                          },
-                          */
+                          title: Text(item.content),
+                          subtitle: Text(item.url),
                         ));
                   },
                 )));

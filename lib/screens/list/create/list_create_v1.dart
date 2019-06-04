@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/widgets/list_edit_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -20,11 +20,14 @@ class ListCreateV1ScreenState extends State<ListCreateV1Screen> {
     aList = newEmptyAlistV1();
   }
 
-  void onSaveListInfo(String value) {
-    bool hasChanged = aList.listInfo.title != value;
+  void onSaveListInfo(String value) async {
+    bool hasChanged = aList.info.title != value;
     if (hasChanged) {
-      aList.listInfo.title = value;
-      ScopedModel.of<ListsRepository>(context).updateAlist(aList);
+      aList.info.title = value;
+      var saved =
+          await ScopedModel.of<ListsRepository>(context).addAlist(aList);
+      // It makes the difference because we get a new uuid from the server.
+      aList = AlistV1(saved);
       Navigator.of(context).popAndPushNamed(ViewListRoute.routePrefix,
           arguments: ViewListRouteArguments(aList.uuid));
     }

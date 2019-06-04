@@ -31,6 +31,12 @@ class Menu extends StatelessWidget {
               Navigator.of(context).pushNamed(PlayRoute.routePrefix);
             },
           ),
+          ListTile(
+            title: Text('Server Options'),
+            onTap: () {
+              Navigator.of(context).pushNamed(ServerOptionsRoute.routePrefix);
+            },
+          ),
         ],
       ),
       elevation: 20.0,

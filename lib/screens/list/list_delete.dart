@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:learnalist/routes/find.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -21,9 +21,9 @@ class ListDeleteScreen extends StatelessWidget {
         child: Column(children: [
           FlatButton(
             child: Text('I want to hide all evidence of this list.'),
-            onPressed: () {
+            onPressed: () async {
               print('Back to the future.');
-              ScopedModel.of<ListsRepository>(context).removeAlist(aList);
+              await ScopedModel.of<ListsRepository>(context).removeAlist(aList);
               Navigator.pushNamedAndRemoveUntil(context, FindRoute.routePrefix,
                   ModalRoute.withName(FindRoute.routePrefix));
             },

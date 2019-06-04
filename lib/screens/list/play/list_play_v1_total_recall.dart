@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/play/v1/total_recall/total_recall_v1.dart';
 
 class ListPlayV1TotalRecallScreen extends StatelessWidget {

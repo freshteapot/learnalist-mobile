@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/widgets/list_edit_list_info.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -20,9 +20,9 @@ class ListEditV2Screen extends StatefulWidget {
 
 class ListEditV2ScreenState extends State<ListEditV2Screen> {
   void onSaveListInfo(String value) {
-    bool hasChanged = widget.aList.listInfo.title != value;
+    bool hasChanged = widget.aList.info.title != value;
     if (hasChanged) {
-      widget.aList.listInfo.title = value;
+      widget.aList.info.title = value;
 
       ScopedModel.of<ListsRepository>(context, rebuildOnChange: true)
           .updateAlist(widget.aList);

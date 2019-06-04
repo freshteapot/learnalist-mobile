@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/screens/list/edit/list_edit_v1.dart';
 import 'package:learnalist/screens/list/edit/list_edit_v2.dart';
+import 'package:learnalist/screens/list/edit/list_edit_v3.dart';
+import 'package:learnalist/screens/list/edit/list_edit_v4.dart';
 import 'package:learnalist/screens/list/edit/list_edit_not_found.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:learnalist/models/lists_repository.dart';
@@ -24,17 +26,31 @@ class EditListRoute extends StatelessWidget {
           .singleWhere((aList) => aList.uuid == args.uuid, orElse: () => null);
     }
 
-    if (aList.listInfo.listType == ListType.v1) {
+    if (aList.info.listType == ListType.v1) {
       if (aList is! AlistV1) {
         aList = newAlistV1(aList);
       }
       return ListEditV1Screen(aList: aList);
     }
-    if (aList.listInfo.listType == ListType.v2) {
+    if (aList.info.listType == ListType.v2) {
       if (aList is! AlistV2) {
         aList = newAlistV2(aList);
       }
       return ListEditV2Screen(aList: aList);
+    }
+
+    if (aList.info.listType == ListType.v3) {
+      if (aList is! AlistV3) {
+        aList = newAlistV3(aList);
+      }
+      return ListEditV3Screen(aList: aList);
+    }
+
+    if (aList.info.listType == ListType.v4) {
+      if (aList is! AlistV4) {
+        aList = newAlistV4(aList);
+      }
+      return ListEditV4Screen(aList: aList);
     }
     // TODO return an error page for lists
     return ListEditNotFoundScreen();

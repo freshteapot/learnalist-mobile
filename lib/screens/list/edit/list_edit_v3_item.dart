@@ -4,10 +4,10 @@ import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 // Create a Form Widget
-class ListEditItemV2Screen extends StatelessWidget {
-  final AlistV2 aList;
+class ListEditItemV3Screen extends StatelessWidget {
+  final AlistV3 aList;
 
-  ListEditItemV2Screen({Key key, @required this.aList}) : super(key: key);
+  ListEditItemV3Screen({Key key, @required this.aList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class ListEditItemV2Screen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(children: [
-          ListItemV2Form(aList),
+          ListItemV3Form(aList),
         ]),
       ),
     );
@@ -26,20 +26,20 @@ class ListEditItemV2Screen extends StatelessWidget {
 }
 
 // Create a Form Widget
-class ListItemV2Form extends StatefulWidget {
-  final AlistV2 aList;
+class ListItemV3Form extends StatefulWidget {
+  final AlistV3 aList;
 
-  ListItemV2Form(this.aList);
+  ListItemV3Form(this.aList);
 
   @override
-  ListItemV2FormState createState() {
-    return ListItemV2FormState();
+  ListItemV3FormState createState() {
+    return ListItemV3FormState();
   }
 }
 
-class ListItemV2FormState extends State<ListItemV2Form> {
+class ListItemV3FormState extends State<ListItemV3Form> {
   final _formKey = GlobalKey<FormState>();
-  TypeV2Item _newItem;
+  TypeV3Item _newItem;
   FocusNode _firstFocus;
 
   @override
@@ -47,7 +47,8 @@ class ListItemV2FormState extends State<ListItemV2Form> {
     super.initState();
 
     _firstFocus = FocusNode();
-    _newItem = new TypeV2Item('', '');
+    _newItem =
+        new TypeV3Item('', new V3Split('', 0, 0, ''), new List<V3Split>());
   }
 
   @override
@@ -76,7 +77,7 @@ class ListItemV2FormState extends State<ListItemV2Form> {
                         autocorrect: false,
                         initialValue: '',
                         decoration: InputDecoration(
-                          labelText: 'From:',
+                          labelText: 'When:',
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
@@ -84,28 +85,71 @@ class ListItemV2FormState extends State<ListItemV2Form> {
                           }
                         },
                         onSaved: (String value) {
-                          _newItem.from = value;
+                          _newItem.when = value;
                         }),
                     TextFormField(
                         initialValue: '',
                         autocorrect: false,
                         decoration: InputDecoration(
-                          labelText: 'To:',
+                          labelText: 'Time:',
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Please enter the time it took.';
                           }
                         },
                         onSaved: (String value) {
-                          _newItem.to = value;
+                          _newItem.overall.time = value;
+                        }),
+                    TextFormField(
+                        initialValue: '',
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          labelText: 'Distance:',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter the distance.';
+                          }
+                        },
+                        onSaved: (String value) {
+                          _newItem.overall.distance = int.parse(value);
+                        }),
+                    TextFormField(
+                        initialValue: '',
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          labelText: 'Stroke per minute:',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter the strokes per minute.';
+                          }
+                        },
+                        onSaved: (String value) {
+                          _newItem.overall.spm = int.parse(value);
+                        }),
+                    TextFormField(
+                        initialValue: '',
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          labelText: '500m split time:',
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter the 500m split time.';
+                          }
+                        },
+                        onSaved: (String value) {
+                          _newItem.overall.p500 = value;
                         }),
                     ButtonBar(
                       children: [
                         FlatButton(
                           onPressed: () {
                             _formKey.currentState.reset();
-                            _newItem = new TypeV2Item('', '');
+                            _newItem = new TypeV3Item('',
+                                new V3Split('', 0, 0, ''), new List<V3Split>());
                             FocusScope.of(context).requestFocus(_firstFocus);
                           },
                           child: Text('Reset'),
@@ -117,7 +161,10 @@ class ListItemV2FormState extends State<ListItemV2Form> {
                               widget.aList.addItem(_newItem);
 
                               _formKey.currentState.reset();
-                              _newItem = new TypeV2Item('', '');
+                              _newItem = new TypeV3Item(
+                                  '',
+                                  new V3Split('', 0, 0, ''),
+                                  new List<V3Split>());
                               FocusScope.of(context).requestFocus(_firstFocus);
                               // If the form is valid, we want to show a Snackbar
                               ScopedModel.of<ListsRepository>(context)

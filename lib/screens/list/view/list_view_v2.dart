@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnalist/models/learnalist.dart';
+import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/widgets/list_view_list_info.dart';
 import 'package:learnalist/routes/edit_list.dart';
 import 'package:learnalist/routes/find.dart';
