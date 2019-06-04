@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:learnalist/models/lists_repository.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -125,7 +123,6 @@ class ServerOptionsFormState extends State<ServerOptionsForm> {
                                 username: '',
                                 password: '');
                             FocusScope.of(context).requestFocus(_firstFocus);
-                            // TODO - we should have a way to remove the credentials
                             await ScopedModel.of<ListsRepository>(context)
                                 .credentials
                                 .clear();
