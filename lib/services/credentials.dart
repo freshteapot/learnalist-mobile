@@ -34,6 +34,18 @@ class Credentials {
     return _current.basicAuth;
   }
 
+  // Simple verification to speculate the user can
+  // query the api.
+  bool isVerified() {
+    if (_current.server.isEmpty) {
+      return false;
+    }
+    if (_current.username.isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
   Future<void> load() async {
     var db = _database;
     List<Map> result = await db.rawQuery("SELECT * FROM server_credentials;");

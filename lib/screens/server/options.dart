@@ -136,17 +136,11 @@ class ServerOptionsFormState extends State<ServerOptionsForm> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
-                              // TODO
-
                               var credentials = ServerCredentials(
                                   server: _input.server,
                                   username: _input.username,
                                   basicAuth: _input.getBasicAuth());
-
                               _input = new ServerCredentialsInput();
-                              print('Save this somewhere');
-                              print(credentials);
-                              print(credentials.basicAuth);
                               var success =
                                   await ScopedModel.of<ListsRepository>(context)
                                       .saveCredentials(credentials);

@@ -15,6 +15,11 @@ void main() async {
   var credentials = Credentials(db);
   await credentials.load();
 
+  String startAt = '/';
+  if (!credentials.isVerified()) {
+    startAt = '/server_options';
+  }
+
   var api = Api(credentials);
   final listsRepository = ListsRepository(
       storage: databaseStorage, credentials: credentials, api: api);
@@ -22,7 +27,7 @@ void main() async {
     ScopedModel<ListsRepository>(
       // Here's where we provide the model to any interested widget below.
       model: listsRepository,
-      child: LearnalistApp(startAt: '/server_options'),
+      child: LearnalistApp(startAt: startAt),
     ),
   );
 }
