@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/screens/list/edit/list_edit_v1.dart';
 import 'package:learnalist/screens/list/edit/list_edit_v2.dart';
+import 'package:learnalist/screens/list/edit/list_edit_v3.dart';
 import 'package:learnalist/screens/list/edit/list_edit_not_found.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:learnalist/models/lists_repository.dart';
@@ -35,6 +36,13 @@ class EditListRoute extends StatelessWidget {
         aList = newAlistV2(aList);
       }
       return ListEditV2Screen(aList: aList);
+    }
+    print(aList.info.listType);
+    if (aList.info.listType == ListType.v3) {
+      if (aList is! AlistV3) {
+        aList = newAlistV3(aList);
+      }
+      return ListEditV3Screen(aList: aList);
     }
     // TODO return an error page for lists
     return ListEditNotFoundScreen();

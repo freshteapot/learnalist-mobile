@@ -6,6 +6,8 @@ class TypeV3Item {
   V3Split overall;
   List<V3Split> splits;
 
+  TypeV3Item(this.when, this.overall, this.splits);
+
   TypeV3Item.fromJson(Map<String, dynamic> json) {
     this.when = json['when'];
     this.overall = V3Split.fromJson(json['overall']);
@@ -30,6 +32,8 @@ class V3Split {
   int distance;
   int spm;
   String p500;
+
+  V3Split(this.time, this.distance, this.spm, this.p500);
 
   V3Split.fromJson(Map<String, dynamic> json)
       : time = json['time'],
