@@ -43,6 +43,10 @@ class _LearnalistAppState extends State<LearnalistApp> {
             CreateListV1Route(),
         CreateListV2Route.routePrefix: (BuildContext context) =>
             CreateListV2Route(),
+        CreateListV3Route.routePrefix: (BuildContext context) =>
+            CreateListV3Route(),
+        CreateListV4Route.routePrefix: (BuildContext context) =>
+            CreateListV4Route(),
         ViewListRoute.routePrefix: (BuildContext context) => ViewListRoute(),
         EditListRoute.routePrefix: (BuildContext context) => EditListRoute(),
         // Import export
@@ -70,6 +74,22 @@ class _LearnalistAppState extends State<LearnalistApp> {
             return MaterialPageRoute(
               builder: (context) {
                 return CreateListV2Route();
+              },
+            );
+          }
+
+          if (args.listType == 'v3') {
+            return MaterialPageRoute(
+              builder: (context) {
+                return CreateListV3Route();
+              },
+            );
+          }
+
+          if (args.listType == 'v4') {
+            return MaterialPageRoute(
+              builder: (context) {
+                return CreateListV4Route();
               },
             );
           }
