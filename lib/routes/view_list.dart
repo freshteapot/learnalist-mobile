@@ -18,6 +18,7 @@ class ViewListRoute extends StatelessWidget {
     Alist aList = ScopedModel.of<ListsRepository>(context)
         .aLists
         .singleWhere((aList) => aList.uuid == args.uuid, orElse: () => null);
+
     assert(aList.data != null);
 
     if (aList.info.listType == ListType.v1) {

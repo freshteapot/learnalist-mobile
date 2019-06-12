@@ -44,19 +44,9 @@ class RootScreen extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.add_box),
-            title: Text('Create a simple list of items (v1).'),
+            title: Text('Create a list.'),
             onTap: () {
-              Navigator.of(context).pushNamed('/create/list',
-                  arguments: CreateListRouteArguments('v1'));
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.add_box),
-            title: Text('Create a list of  from -> to (v2).'),
-            onTap: () {
-              Navigator.of(context).pushNamed('/create/list',
-                  arguments: CreateListRouteArguments('v2'));
+              Navigator.of(context).pushNamed('/create');
             },
           ),
           Divider(),
@@ -67,25 +57,7 @@ class RootScreen extends StatelessWidget {
               Navigator.of(context)
                   .pushNamed(ImportExportRootRoute.routePrefix);
             },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.add_box),
-            title: Text('View a list via uuid only.'),
-            onTap: () {
-              Navigator.of(context).pushNamed(ViewListRoute.routePrefix,
-                  arguments: ViewListRouteArguments(
-                      '8b19f084-430d-5dc4-a7a1-f404c85a06b1'));
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.add_box),
-            title: Text('Samples of a timer.'),
-            onTap: () {
-              Navigator.of(context).pushNamed('/samples/atimer');
-            },
-          ),
+          )
         ],
       ),
     );
