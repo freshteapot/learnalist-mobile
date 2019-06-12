@@ -7,6 +7,8 @@
 - Trigger the user to learn with the lists.
 - Interact with the learnalist api.
 
+# Docs
+Documentation overview can be found [here](./docs/).
 
 # Notes
 
