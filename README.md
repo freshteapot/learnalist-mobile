@@ -8,7 +8,7 @@
 - Interact with the learnalist api.
 
 # Docs
-Documentation overview can be found [here](./docs/).
+Documentation overview can be found [here](./docs/index.md).
 
 # Notes
 
