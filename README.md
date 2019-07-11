@@ -5,8 +5,10 @@
 - Make it easy to add lists.
 - Make it easy to play with lists.
 - Trigger the user to learn with the lists.
-- Interact with the learnalist api.
+- Interact with the learnalist [api](https://github.com/freshteapot/learnalist-api/tree/master/api).
 
+# Docs
+Documentation overview can be found [here](./docs/index.md).
 
 # Notes
 

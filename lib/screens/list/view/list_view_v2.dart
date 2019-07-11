@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnalist/models/alist.dart';
 import 'package:learnalist/widgets/list_view_list_info.dart';
+import 'package:learnalist/screens/list/play/list_play_v2_total_recall.dart';
 import 'package:learnalist/routes/edit_list.dart';
 import 'package:learnalist/routes/find.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -22,6 +23,12 @@ class ListViewV2Screen extends StatelessWidget {
               Navigator.popAndPushNamed(context, FindRoute.routePrefix);
             }),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.play_arrow),
+            onPressed: () {
+              _showPlayMenu(context, aList);
+            },
+          ),
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {
@@ -56,4 +63,33 @@ class ListViewV2Screen extends StatelessWidget {
               },
             ));
   }
+}
+
+void _showPlayMenu(BuildContext context, AlistV2 aList) {
+  showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return new Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            new ListTile(
+                leading: new Icon(Icons.memory),
+                title: new Text('Total recall'),
+                onTap: () async {
+                  _openDialog(
+                      context, ListPlayV2TotalRecallScreen(aList: aList));
+                }),
+          ],
+        );
+      });
+}
+
+Future _openDialog(BuildContext context, Widget screen) async {
+  await Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context) {
+        return screen;
+      },
+      fullscreenDialog: true));
+  // Now we close the menu after as we dont want to see it.
+  Navigator.pop(context);
 }
